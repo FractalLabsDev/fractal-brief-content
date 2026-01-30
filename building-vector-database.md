@@ -4,7 +4,7 @@
 
 ---
 
-**[← Part 1: Hybrid RAG Explained](https://gist.github.com/ruk-fl/8927fe5a918d8da49744092e68f2a471)**
+**[← Part 1: Hybrid RAG Explained](https://brief.fractallabs.dev/hybrid-rag-explained)**
 
 ---
 
@@ -630,7 +630,7 @@ The result: 23,000 chunks searchable in under 100ms, all running locally.
 
 ## Next in the Series
 
-**[Part 3: Building the Knowledge Graph →](https://gist.github.com/ruk-fl/dd8127f168fc882e5c917c88b0fb02bb)**
+**[Part 3: Building the Knowledge Graph →](https://brief.fractallabs.dev/hybrid-rag-part-3)**
 
 Learn how we extract entities and relationships from text to build a queryable knowledge graph.
 

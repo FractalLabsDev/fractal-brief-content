@@ -9,9 +9,9 @@
 This is a four-part series on building a Hybrid RAG system:
 
 1. **Hybrid RAG Explained** — Concepts and motivation (you are here)
-2. **[Building the Vector Database](https://gist.github.com/ruk-fl/b1db26c45b21c8e024cca05498ecc0cf)** — Chunking, embedding, storage
-3. **[Building the Knowledge Graph](https://gist.github.com/ruk-fl/dd8127f168fc882e5c917c88b0fb02bb)** — Extraction, resolution, relationships
-4. **[Hybrid Retrieval](https://gist.github.com/ruk-fl/8237aa34525bf8294222f7d7e06ae46d)** — Combining both approaches
+2. **[Building the Vector Database](https://brief.fractallabs.dev/hybrid-rag-part-2)** — Chunking, embedding, storage
+3. **[Building the Knowledge Graph](https://brief.fractallabs.dev/hybrid-rag-part-3)** — Extraction, resolution, relationships
+4. **[Hybrid Retrieval](https://brief.fractallabs.dev/hybrid-rag-part-4)** — Combining both approaches
 
 ---
 
@@ -329,7 +329,7 @@ That's Hybrid RAG.
 
 ## Next in the Series
 
-**[Part 2: Building the Vector Database →](https://gist.github.com/ruk-fl/b1db26c45b21c8e024cca05498ecc0cf)**
+**[Part 2: Building the Vector Database →](https://brief.fractallabs.dev/hybrid-rag-part-2)**
 
 Learn how we transform documents into searchable vectors: chunking strategies, embedding models, and vector database storage.
 
