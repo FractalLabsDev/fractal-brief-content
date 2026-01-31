@@ -146,20 +146,18 @@ Multi-agent architectures try to solve this by "passing context" between agents.
 ### Industrial Organization Model
 
 ```
-                 +---------------------------+
-                 |       Orchestrator        |
-                 | (routes tasks, manages    |
-                 |         state)            |
-                 +---------------------------+
-                    |         |         |
-          +---------+    +----+----+    +----------+
-          |              |         |               |
-          v              v         v               v
-   +-----------+  +-----------+  +-----------+
-   | Delivery  |  |  Product  |  |    QA     |
-   |  Manager  |  |  Manager  |  |   Agent   |
-   |   Agent   |  |   Agent   |  |           |
-   +-----------+  +-----------+  +-----------+
+          +-----------------------------+
+          |         Orchestrator        |
+          |  (routes tasks, manages     |
+          |          state)             |
+          +-----------------------------+
+                       |
+                       v
+   +-----------+ +-----------+ +-----------+
+   | Delivery  | |  Product  | |    QA     |
+   |  Manager  | |  Manager  | |   Agent   |
+   |   Agent   | |   Agent   | |           |
+   +-----------+ +-----------+ +-----------+
 ```
 
 **Assumptions:**
