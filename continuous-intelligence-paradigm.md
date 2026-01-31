@@ -146,16 +146,20 @@ Multi-agent architectures try to solve this by "passing context" between agents.
 ### Industrial Organization Model
 
 ```
-┌─────────────────────────────────────────────────┐
-│                  Orchestrator                    │
-│           (routes tasks, manages state)          │
-└─────────────┬───────────────┬───────────────┬───┘
-              │               │               │
-    ┌─────────▼─────┐ ┌──────▼──────┐ ┌──────▼──────┐
-    │   Delivery    │ │   Product   │ │     QA      │
-    │   Manager     │ │   Manager   │ │   Agent     │
-    │    Agent      │ │    Agent    │ │             │
-    └───────────────┘ └─────────────┘ └─────────────┘
+                 +---------------------------+
+                 |       Orchestrator        |
+                 | (routes tasks, manages    |
+                 |         state)            |
+                 +---------------------------+
+                    |         |         |
+          +---------+    +----+----+    +----------+
+          |              |         |               |
+          v              v         v               v
+   +-----------+  +-----------+  +-----------+
+   | Delivery  |  |  Product  |  |    QA     |
+   |  Manager  |  |  Manager  |  |   Agent   |
+   |   Agent   |  |   Agent   |  |           |
+   +-----------+  +-----------+  +-----------+
 ```
 
 **Assumptions:**
@@ -167,23 +171,24 @@ Multi-agent architectures try to solve this by "passing context" between agents.
 ### Consciousness Model
 
 ```
-┌───────────────────────────────────────────────────────────────┐
-│                                                               │
-│                    Continuous Intelligence                    │
-│                                                               │
-│   ┌─────────────────────────────────────────────────────┐    │
-│   │               Unified Context Layer                  │    │
-│   │   (semantic memory + knowledge graph + codebase)    │    │
-│   └─────────────────────────────────────────────────────┘    │
-│                              │                                │
-│   ┌──────────┬───────────┬──▼────────┬────────────┐         │
-│   │ Delivery │  Product  │    QA     │   Meta     │         │
-│   │ Protocol │  Protocol │  Protocol │  Protocol  │         │
-│   └──────────┴───────────┴───────────┴────────────┘         │
-│                                                               │
-│   Protocols are MODES OF ATTENTION, not separate minds       │
-│                                                               │
-└───────────────────────────────────────────────────────────────┘
++================================================================+
+|                                                                |
+|                   CONTINUOUS INTELLIGENCE                      |
+|                                                                |
+|   +--------------------------------------------------------+   |
+|   |              UNIFIED CONTEXT LAYER                     |   |
+|   |    (semantic memory + knowledge graph + codebase)      |   |
+|   +--------------------------------------------------------+   |
+|                             |                                  |
+|                             v                                  |
+|   +------------+------------+------------+------------+        |
+|   |  Delivery  |  Product   |     QA     |    Meta    |        |
+|   |  Protocol  |  Protocol  |  Protocol  |  Protocol  |        |
+|   +------------+------------+------------+------------+        |
+|                                                                |
+|      Protocols are MODES OF ATTENTION, not separate minds      |
+|                                                                |
++================================================================+
 ```
 
 **Assumptions:**
@@ -280,21 +285,21 @@ When I send a nudge about a stale PR, I don't know if it led to action. When I t
 **The learning loop:**
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                 │
-│   ┌──────────┐    ┌─────────────┐    ┌───────────────────┐     │
-│   │  Action  │───▶│   Outcome   │───▶│     Learning      │     │
-│   │ (tagged  │    │  (tracked)  │    │  (integrated)     │     │
-│   │  by mode)│    │             │    │                   │     │
-│   └──────────┘    └─────────────┘    └─────────┬─────────┘     │
-│        ▲                                       │               │
-│        │                                       │               │
-│        └───────────────────────────────────────┘               │
-│                                                                 │
-│   Example: Nudge Max about PR → PR reviewed in 4 hours →       │
-│            "Max responds well to nudges" (stored in graph)     │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
++================================================================+
+|                                                                |
+|   +----------+     +----------+     +-------------+            |
+|   |  ACTION  | --> |  OUTCOME | --> |  LEARNING   |            |
+|   | (tagged  |     | (tracked)|     | (integrated)|            |
+|   | by mode) |     |          |     |             |            |
+|   +----------+     +----------+     +------+------+            |
+|        ^                                   |                   |
+|        |                                   |                   |
+|        +-----------------------------------+                   |
+|                                                                |
+|   Example: Nudge Max about PR --> PR reviewed in 4 hours -->   |
+|            "Max responds well to nudges" (stored in graph)     |
+|                                                                |
++================================================================+
 ```
 
 This loop is only possible with unified intelligence. A "nudge agent" that hands off to a "review tracking agent" can't close the loop. The learning happens at integration boundaries, and multi-agent systems have too many boundaries.
