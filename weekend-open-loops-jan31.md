@@ -29,13 +29,15 @@ Max completed the Wordware-to-Promptsmith migration. This is the new AI prompt m
 
 ---
 
-### 2. Fractal Meet Backend Rebuild
+### 2. talkwise-chronicler Rebuild (Meeting Intelligence Backend)
 
 **Status:** Austin is rebuilding - targeting Monday completion
 
-Synthesizing Recall.ai, Google Meet, and Fractal Meet transcripts into unified UI. Matt needs meeting access for delivery manager prep notes.
+**Clarification:**
+- **Fractal Meet** = a video conferencing platform (one source of recordings)
+- **talkwise-chronicler** = the backend service that stores and synthesizes recordings/transcripts from ALL platforms (Recall.ai, Google Meet, Fractal Meet)
 
-**Related context:** Matt asked for Fractal OS permissions to view meetings - Austin mentioned rebuilding the backend first.
+The chronicler rebuild will unify these three transcript sources into one UI. Matt needs meeting access for delivery manager prep notes.
 
 **Owner:** Austin
 
@@ -56,37 +58,21 @@ Matt's instruction: "Let's wait until that's resolved before scheduling the runs
 - All core tests pass against Practice Interviews production
 - Tool ready at `PROJECTS/delivery-manager-agent/tools/qa/qa-check.js`
 
-**Owner:** Austin/Max to decide direction, then Matt/Ruk to implement
+**Owner:** Austin/Max to decide direction
 
 ---
 
 ## HIGH PRIORITY: This Weekend
 
-### 4. Practice Interviews Bug Fixes (PR #403)
-
-**Status:** PR ready for review - fixes 4 bugs from Matt's Loom walkthrough
-
-[PR #403](https://github.com/FractalLabsDev/practice-interviews-web/pull/403) fixes:
-- #399: Field/role not populating in summary banner
-- #400: Feedback page shows 'NA' instead of loading spinner
-- #401: Two loading spinners in body language section
-- #402: Subscription modal card sizes and hidden button
-
-**Note:** Bug #398 (login button) is in `practice-interviews-landing` repo, not `practice-interviews-web`
-
-**Owner:** Max to review, Matt to approve
-
----
-
-### 5. ruk-observer Service (Delivery Manager Foundation)
+### 4. ruk-observer Service (Delivery Manager Foundation)
 
 **Status:** Spec complete, ready to build
 
 This is the 10x infrastructure work - building the action logging service that enables learning loops and fitness metrics.
 
 **Docs:**
-- [RUK-OBSERVER-SPEC.md](./RUK-OBSERVER-SPEC.md) - Full technical specification
-- [WEEKEND-PLAN.md](./WEEKEND-PLAN.md) - Implementation schedule
+- `PROJECTS/delivery-manager-agent/RUK-OBSERVER-SPEC.md` - Full technical specification
+- `PROJECTS/delivery-manager-agent/WEEKEND-PLAN.md` - Implementation schedule
 
 **Weekend targets:**
 - Saturday: Fractal OS schema extension + ruk-observer core
@@ -98,76 +84,17 @@ This is the 10x infrastructure work - building the action logging service that e
 
 ---
 
-### 6. PI Open Issues (10 open)
+### 5. Vitaboom Payments Migration (Revenue Opportunity)
 
-**Status:** Mixed - some fixed in PR #403, others need attention
+**Status:** Exploratory - waiting for confirmation from Sean
 
-| # | Title | Status |
-|---|-------|--------|
-| 402 | Subscription modal UX | Fixed in PR #403 |
-| 401 | Two spinners in body language | Fixed in PR #403 |
-| 400 | 'NA' instead of loading spinner | Fixed in PR #403 |
-| 399 | Field/role not populating | Fixed in PR #403 |
-| 398 | Login button navigation | Different repo |
-| 393 | Declare z-indices in theme | Open |
-| 387 | Missing job descriptions | Open |
-| 386 | Hypothetical questions missing scores | Open |
-| 384 | Side panel responsiveness | Open |
-| 383 | Analytics colors | Open |
+Austin spoke with Sean from Payments Toolbox (Empire connection). Key insight: they have certification to request unredacted CC details from other providers - could enable migration from Bankful with **zero subscriber churn**.
 
-**Owner:** Team triage needed
+Sean will confirm on their next team call. Don't share with Justin yet until confirmed.
 
----
-
-## MEDIUM PRIORITY: Next Week
-
-### 7. Therapist Genie - Friday Deadline
-
-**Status:** In progress, deadline next Friday
-
-From 1/29 meeting: Rigo has something due by next Friday. Not fully specified what, but Matt said "don't stress too much about it right now."
-
-**Owner:** Rigo, Matt oversight
-
----
-
-### 8. Vitaboom Stale PR
-
-**Status:** Matt asked Max about it
-
-[vitaboom-backend #82](https://github.com/FractalLabsDev/vitaboom-backend/pull/82) - "has been hanging out there for a while"
-
-Matt asked if it's still relevant/required.
-
-**Owner:** Max to respond
-
----
-
-### 9. Vitaboom Payments Migration (Potential)
-
-**Status:** Exploratory - waiting for confirmation
-
-Austin spoke with Sean from Payments Toolbox (Empire connection). Key insight: they have certification to request unredacted CC details from other providers - could enable migration from Bankful with zero churn.
-
-Sean will confirm on their next team call. Don't share with Justin yet.
+**This creates a new revenue stream** - Payments Toolbox partnership/referral opportunity.
 
 **Owner:** Austin to follow up with Sean
-
----
-
-### 10. CPO Roadmap for Practice Interviews
-
-**Status:** Waiting for data from new analytics tracking
-
-PR #397 added tracking for:
-- Subscription page events (78% drop-off investigation)
-- Interview sessions (95% drop-off investigation)
-- Onboarding flow
-- Activation constants
-
-Need ~1 week of data before diagnosing funnels and forming experiment hypotheses.
-
-**Owner:** Matt/Ruk CPO role
 
 ---
 
@@ -176,7 +103,6 @@ Need ~1 week of data before diagnosing funnels and forming experiment hypotheses
 - Scheduler infrastructure deployed (daily trigger, delivery manager nudges)
 - QA component Phase 1 built and tested
 - Agentic velocity analysis completed (274 Ruk commits, 10x repo creation rate)
-- Bug fixes PR #403 created from Matt's Loom
 - Code reviews for Max's Promptsmith PRs
 
 ---
