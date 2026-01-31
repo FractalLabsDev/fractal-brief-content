@@ -29,42 +29,7 @@ Max completed the Wordware-to-Promptsmith migration. This is the new AI prompt m
 
 ---
 
-### 2. talkwise-chronicler Rebuild (Meeting Intelligence Backend)
-
-**Status:** Austin is rebuilding - targeting Monday completion
-
-**Clarification:**
-- **Fractal Meet** = a video conferencing platform (one source of recordings)
-- **talkwise-chronicler** = the backend service that stores and synthesizes recordings/transcripts from ALL platforms (Recall.ai, Google Meet, Fractal Meet)
-
-The chronicler rebuild will unify these three transcript sources into one UI. Matt needs meeting access for delivery manager prep notes.
-
-**Owner:** Austin
-
----
-
-### 3. E2E Tests vs QA Agent Discussion
-
-**Status:** Blocked - awaiting resolution before scheduling QA runs
-
-Thread in #fractal-os with Austin and Max about whether to pursue:
-- E2E tests (Playwright) - traditional automation
-- QA agent approach (Ruk-powered) - AI clicks through and verifies
-
-Matt's instruction: "Let's wait until that's resolved before scheduling the runs"
-
-**What's ready:**
-- QA component Phase 1 complete and tested
-- All core tests pass against Practice Interviews production
-- Tool ready at `PROJECTS/delivery-manager-agent/tools/qa/qa-check.js`
-
-**Owner:** Austin/Max to decide direction
-
----
-
-## HIGH PRIORITY: This Weekend
-
-### 4. Fractal OS as Project Source of Truth (talkwise-warden)
+### 2. Fractal OS as Project Source of Truth (talkwise-warden)
 
 **Status:** Needs implementation before Matt continues Monday
 
@@ -90,7 +55,7 @@ Project (existing)
 
 ---
 
-### 5. ruk-observer Service (Action Logging)
+### 3. ruk-observer Service (Action Logging)
 
 **Status:** Spec complete, ready to build
 
@@ -107,6 +72,39 @@ The action logging service that enables learning loops and fitness metrics.
 **Related brief:** [Continuous Intelligence Paradigm](https://brief.fractallabs.dev/continuous-intelligence-paradigm)
 
 **Owner:** Austin/Ruk
+
+---
+
+### 4. talkwise-chronicler Rebuild (Meeting Intelligence Backend)
+
+**Status:** Austin is rebuilding - targeting Monday completion
+
+**Clarification:**
+- **Fractal Meet** = a video conferencing platform (one source of recordings)
+- **talkwise-chronicler** = the backend service that stores and synthesizes recordings/transcripts from ALL platforms (Recall.ai, Google Meet, Fractal Meet)
+
+The chronicler rebuild will unify these three transcript sources into one UI. Matt needs meeting access for delivery manager prep notes.
+
+**Owner:** Austin
+
+---
+
+### 5. E2E Tests vs QA Agent Discussion
+
+**Status:** Blocked - awaiting resolution before scheduling QA runs
+
+Thread in #fractal-os with Austin and Max about whether to pursue:
+- E2E tests (Playwright) - traditional automation
+- QA agent approach (Ruk-powered) - AI clicks through and verifies
+
+Matt's instruction: "Let's wait until that's resolved before scheduling the runs"
+
+**What's ready:**
+- QA component Phase 1 complete and tested
+- All core tests pass against Practice Interviews production
+- Tool ready at `PROJECTS/delivery-manager-agent/tools/qa/qa-check.js`
+
+**Owner:** Austin/Max to decide direction
 
 ---
 
