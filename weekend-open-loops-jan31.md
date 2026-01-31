@@ -64,11 +64,37 @@ Matt's instruction: "Let's wait until that's resolved before scheduling the runs
 
 ## HIGH PRIORITY: This Weekend
 
-### 4. ruk-observer Service (Delivery Manager Foundation)
+### 4. Fractal OS as Project Source of Truth (talkwise-warden)
+
+**Status:** Needs implementation before Matt continues Monday
+
+Currently the delivery-manager-agent uses a static `projects.json` with just repo names. Need to extend talkwise-warden Project model to include:
+
+```
+Project (existing)
+├── repositories[] (existing)
+├── slack_channels: { internal, shared }
+├── meeting_pattern: "practice-interviews"  // for semantic memory
+├── data_sources: { posthog_project, stripe_account }
+└── delivery_config: { stale_pr_days, stale_issue_days, digest_day }
+```
+
+**Implementation:**
+1. Add fields to talkwise-warden Project model
+2. Create `TOOLS/fractal-os/project-config.js` to fetch full config
+3. Update delivery-manager tools to use API instead of static JSON
+
+**Why this matters for Matt:** Single source of truth he can update via Fractal OS GUI instead of editing JSON files.
+
+**Owner:** Austin/Ruk
+
+---
+
+### 5. ruk-observer Service (Action Logging)
 
 **Status:** Spec complete, ready to build
 
-This is the 10x infrastructure work - building the action logging service that enables learning loops and fitness metrics.
+The action logging service that enables learning loops and fitness metrics.
 
 **Docs:**
 - `PROJECTS/delivery-manager-agent/RUK-OBSERVER-SPEC.md` - Full technical specification
@@ -84,7 +110,7 @@ This is the 10x infrastructure work - building the action logging service that e
 
 ---
 
-### 5. Vitaboom Payments Migration (Revenue Opportunity)
+### 6. Vitaboom Payments Migration (Revenue Opportunity)
 
 **Status:** Exploratory - waiting for confirmation from Sean
 
