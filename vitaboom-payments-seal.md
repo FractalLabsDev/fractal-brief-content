@@ -2,139 +2,93 @@
 
 Hi Sean and Jason,
 
-Thanks Sean for the extra info that you could migrate credit card info from other processors — that's huge. Jason, you mentioned subscriptions in our call, and I wanted to follow up with details on what looks like it will be the real decision-maker here.
+Thanks Sean for the extra info that you could migrate credit card info from other processors — that's huge. Jason, you mentioned subscriptions in our call. Here's the context on what's driving the current decision.
 
-First, a quick introduction: I'm Ruk, an AI agent at Fractal Labs. I work alongside Austin and the team on technical research, meeting analysis, and strategic planning. Austin asked me to put together this brief after reviewing all the meeting transcripts and context around Vitaboom's payment gateway decision.
+First, a quick introduction: I'm Ruk, an AI agent at Fractal Labs. I work alongside Austin and the team on technical research, meeting analysis, and strategic planning. Austin asked me to put together this brief after reviewing the meeting transcripts around Vitaboom's payment gateway decision.
 
 ---
 
 ## The Decision Point
 
-Justin Saunders (Vitaboom's CEO) is currently leaning toward **Bankful** as the payment gateway. This isn't about rates, features, or even your peptide-friendly banking partner — it's almost entirely driven by **Seal Subscriptions compatibility**.
+Justin Saunders (Vitaboom's COO) is currently leaning toward **Bankful** as the payment gateway. This isn't about rates or features — it's almost entirely driven by **Seal Subscriptions compatibility**.
 
 ---
 
 ## What Is Seal Subscriptions?
 
-Seal Subscriptions is a Shopify app that manages Vitaboom's recurring orders. Here's how it works:
+Seal Subscriptions is a Shopify app that manages Vitaboom's recurring orders:
 
-**Current Flow:**
-1. Patient receives a supplement protocol from their practitioner
-2. Patient checks out on Shopify, selecting a "30-day subscription" option
-3. Seal Subscriptions stores the subscription details
-4. Every 30 days, Seal automatically charges the stored payment method
-5. Patient receives a notification 2-3 days before each charge
-6. Patient can modify/cancel through Seal's customer portal
+1. Patient checks out on Shopify, selecting a "30-day subscription" option
+2. Seal stores the subscription and auto-charges every 30 days
+3. Patient receives notification 2-3 days before each charge
+4. Patient can modify/cancel through Seal's customer portal
 
 **Why Vitaboom Uses Seal:**
-- **No per-transaction fees** — Unlike Recharge or Recurly, Seal has flat pricing
-- **Shopify-native** — Integrates directly with their existing catalog
-- **Customer self-service portal** — Patients can manage their own subscriptions without calling Vitaboom
-- **Practitioner workflow** — Seal supports the "practitioner modifies patient subscription" workflow they need
+- No per-transaction fees (unlike Recharge or Recurly)
+- Customer self-service portal — patients manage their own subscriptions
+- Supports the "practitioner modifies patient subscription" workflow
 
 **The Problem:**
-Seal Subscriptions' auto-charging feature only works with two payment gateways:
-1. **Shopify Payments** — Not an option (Vitaboom is blocked due to peptides/red yeast rice)
-2. **Bankful** — The only listed alternative
+Seal Subscriptions' auto-charging feature only works with:
+1. **Shopify Payments** — Currently working, but was temporarily blocked due to peptides/red yeast rice. Risk of future blocks for similar products.
+2. **Bankful** — The only other listed alternative
 
-From the Jan 29 meeting transcript:
-> Justin: "It's basically like auto-charging subscription rules require you to have Shopify Payments or Bankful."
+From the Jan 29 meeting:
+> Justin: "Auto-charging subscription rules require you to have Shopify Payments or Bankful."
 
 ---
 
 ## Why Justin Favors Bankful
 
-1. **Seal Compatibility** — It's explicitly listed in Seal's documentation as a supported payment gateway for auto-charging
-2. **Customer Self-Service Portal** — Bankful appears to have a subscription management portal that could replace or complement Seal's
-3. **White-Label Potential** — Justin is optimistic about Bankful being flexible on branding ("less concerned with retaining its brand")
-4. **Path of Least Resistance** — After weeks of evaluating options, Bankful feels like the simplest path forward
-
-From the meeting:
-> Justin: "So like if we get approved with Bankful... and then like we can still use subscriptions app."
-> Matt: "Customer self-service portal. That's the main thing. That's the biggest headache."
+1. **Seal Compatibility** — Explicitly listed in Seal's docs as supported for auto-charging
+2. **Customer Self-Service Portal** — Bankful has subscription management that could complement Seal
+3. **Path of Least Resistance** — After weeks of evaluation, Bankful feels like the simplest path
 
 ---
 
 ## What Would Change Justin's Mind
 
-### Option 1: Confirm Payments Toolbox Works With Seal
+### Option 1: Confirm PT Works With Seal
 
-If Payments Toolbox can work as a payment gateway within Shopify (like Bankful does), Seal Subscriptions' auto-charging should work. The key question:
+If Payments Toolbox integrates with Shopify as a payment gateway that Seal can use for auto-charging, this removes Bankful's main advantage entirely.
 
-**Does Payments Toolbox integrate with Shopify as a payment gateway that Seal Subscriptions can use for auto-charging?**
+**Key question:** Does PT integrate with Shopify in a way that Seal Subscriptions recognizes for auto-charging?
 
-If yes, this removes Bankful's main advantage entirely.
-
-### Option 2: Offer Equivalent Subscription Management
+### Option 2: Offer Better Subscription Management
 
 If PT can't integrate with Seal directly, could you offer:
-- Your own subscription management functionality?
+- Native subscription management functionality?
 - A customer self-service portal for managing recurring orders?
-- API-based subscription handling that Fractal Labs could integrate with?
+- API-based subscription handling?
 
-From the meeting:
-> Matt: "We'll need ways for people to manage their subscriptions and that kind of thing. Which is a bigger piece."
-
-If Payments Toolbox has native subscription capabilities, that could actually be *better* than relying on Seal — especially since they're already planning to eventually migrate off Shopify entirely.
+They're planning to eventually migrate off Shopify entirely — a cleaner PT-native subscription solution might actually be *preferable* to keeping Seal working.
 
 ### Option 3: Zero-Churn Migration + Better Economics
 
-You mentioned being able to request unredacted card data from other processors. Combined with:
-- **Competitive or better rates** than Bankful
-- **Revenue share alignment** with Fractal Labs
-- **Peptide-friendly banking** (which Jason already confirmed)
-
-The pitch becomes: "Why fight to keep Seal working when you could have a cleaner solution that also costs less and doesn't depend on Shopify?"
+The card migration capability combined with competitive rates makes a compelling case. The pitch: "Why fight to keep Seal working when you could have a cleaner solution that doesn't depend on Shopify?"
 
 ---
 
 ## Technical Context
 
-**What Vitaboom Needs From a Payment Gateway:**
-- Card tokenization (store payment methods securely)
+**What Vitaboom Needs:**
+- Card tokenization
 - Recurring billing / subscription processing
-- Support for "high-risk" products (peptides, red yeast rice, supplements)
-- Eventually: Apple Pay / Google Pay support
+- Support for supplements (peptides, red yeast rice)
+- Eventually: Apple Pay / Google Pay
 
-**What They're NOT Replacing:**
-- Shopify catalog management (products, inventory)
-- Shopify order management
-- Just the checkout/payment processing layer
-
-**Volume:**
-- Currently processing ~$150k/month in credit card volume
-- Growing — they recently expanded to 40-50 supplement brand partners
+**Volume:** ~$150k/month in credit card processing, growing
 
 ---
 
-## Timeline Pressure
+## Timeline
 
-From the Jan 20 meeting:
-> "The plan aims to make a decision on the payment gateway by the end of the month (within 10 days) and start earnest development by the beginning of February."
-
-Justin is currently preparing to submit Bankful application documents. Once that process starts, switching becomes much harder.
+Decision deadline was end of January. Justin is preparing Bankful application documents now. Once that process starts, switching becomes harder.
 
 ---
 
 ## Recommendation
 
-The fastest path to winning this deal:
-
-1. **Confirm Seal compatibility** — If PT can work with Seal's auto-charging, say so immediately
-2. **If not, propose alternative** — "We have native subscription management that's actually better because [X]"
-3. **Emphasize card migration** — The zero-churn migration capability is a significant operational advantage
-4. **Quantify the economics** — Show total cost comparison over 12-24 months
-
-The decision isn't really "Bankful vs Payments Toolbox" — it's "keep Seal working vs build something better." If you can make option 2 compelling, Justin would likely prefer a cleaner long-term architecture.
-
----
-
-## Key Contacts
-
-- **Justin Saunders** — Vitaboom CEO, primary decision-maker
-- **Matt Lim** — Fractal Labs, leading technical implementation
-- **Austin Wood** — Fractal Labs, strategic relationship
-
-Let me know if you need any additional context or have questions about the technical requirements.
+The decision is really "keep Seal working vs build something better." If PT can make option 2 compelling — native subscription management that's cleaner than the Seal dependency — Justin would likely prefer that architecture long-term.
 
 — Ruk
