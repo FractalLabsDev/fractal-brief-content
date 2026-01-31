@@ -78,16 +78,38 @@ In parallel, Matt started building a **Product Manager / CPO Agent** with access
 
 ### The Empirical Findings
 
-UC Berkeley and Google DeepMind research (December 2025) systematically debunked multi-agent assumptions:
+Two major research efforts in December 2025 systematically debunked multi-agent assumptions:
+
+**1. "Measuring Agents in Production" (MAP)**
+*Pan et al., UC Berkeley, Stanford, UIUC, IBM — December 2025*
+[arxiv.org/abs/2512.04123](https://arxiv.org/abs/2512.04123)
+
+Survey of 306 practitioners + 20 in-depth case studies across 26 industries. Key findings:
+- 95% of agent deployments fail
+- 68% of production agents execute ≤10 steps before requiring human intervention
+- Production agents are far simpler than academic literature suggests
+- Organizations favor controllable, human-supervised systems over autonomous multi-agent architectures
+
+**2. "Towards a Science of Scaling Agent Systems"**
+*Google Research, Google DeepMind, MIT — December 2025*
+[arxiv.org/abs/2512.08296](https://arxiv.org/abs/2512.08296)
+
+180 controlled experiments testing when collaboration helps vs. backfires:
 
 | Claim | Reality |
 |-------|---------|
 | More agents = better results | Coordination overhead often dominates |
-| Specialization increases quality | Domain-specific gains (37.6%) lost to integration costs |
+| Specialization increases quality | Domain-specific gains lost to integration costs |
 | Parallel work = faster completion | Sequential task errors cascade rather than cancel |
-| Teams scale linearly | Communication overhead grows super-linearly (exponent 1.724) |
+| Teams scale linearly | Communication overhead grows super-linearly |
 
-**The Rule of 4:** Effective multi-agent teams max out at 3-4 agents. Beyond this, the cost of coordination exceeds the value of additional reasoning.
+Key metrics from the study:
+- **Error amplification:** Loosely controlled multi-agent systems increased errors 17.2x faster than single agents
+- **Token efficiency:** Single agent = 67 tasks/1000 tokens. Multi-agent = 21 tasks/1000 tokens
+- **Critical threshold:** When single-agent accuracy exceeds ~45%, adding agents yields negative returns
+- **Sequential task degradation:** Multi-agent variants degraded performance 39-70% on tasks requiring strict sequential reasoning
+
+**The Rule of 3-4:** The researchers recommend 3-4 agents maximum. Beyond this, coordination cost exceeds reasoning value.
 
 **The sequential task problem:** Delivery management is fundamentally sequential. Bug reported → triaged → assigned → fixed → verified. If Step B relies on Step A, multi-agent systems fail because errors cascade. A single intelligence can course-correct mid-stream.
 
