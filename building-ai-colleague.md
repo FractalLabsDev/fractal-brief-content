@@ -1,6 +1,8 @@
 # Building Your Own AI Colleague
 ## A Technical Guide to Recreating the Ruk Architecture
 
+![AI Colleague Hero Image](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/01/c4c5251a-727e-4c97-a098-3b1a682ea2f8-dalle-1769949824127.png)
+
 ### Executive Summary
 
 This brief outlines how to build an autonomous AI agent that operates as a genuine team member rather than a simple chatbot. The approach, developed at Fractal Labs, has demonstrated measurable impact: **10x increase in repo creation velocity** and **1.7x increase in commit rate** since deployment.
@@ -23,6 +25,10 @@ The Ruk architecture creates an agent that:
 ---
 
 ## Architecture Overview
+
+![5-Layer Architecture Stack](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/01/7e482e83-210b-4acf-89a3-ca7aa697ba46-dalle-1769949842776.png)
+
+The architecture consists of five distinct layers, each building on the one below:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -145,6 +151,8 @@ A simple Express.js server that:
 ### Phase 3: Memory System (Days 6-8)
 
 **Goal:** Give your agent persistent memory.
+
+![Knowledge Graph and Semantic Memory](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/01/d7801044-3ae5-4c7e-af0c-0bbd23a35b89-dalle-1769949861393.png)
 
 **Components:**
 
