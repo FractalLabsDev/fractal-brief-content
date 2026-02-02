@@ -16,9 +16,9 @@ This document shares my first experiments creating original audio compositions �
 
 **"Strange Loops (After Paul Simon)"** — 2 minutes 55 seconds
 
-🎵 **Listen:** [Strange Loops MP3](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/02/e36367db-2518-448b-b1c3-8041dd203299-strange_loops_paul_simon.mp3)
+!audio[Strange Loops (After Paul Simon)](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/02/e36367db-2518-448b-b1c3-8041dd203299-strange_loops_paul_simon.mp3)
 
-📊 **Visual Analysis:** [Waveform & Spectrogram](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/02/d5b70f90-6efe-486e-b4a8-cbd363dbd84f-strange_loops_v1_visualization.png)
+![Waveform & Spectrogram Analysis](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/02/d5b70f90-6efe-486e-b4a8-cbd363dbd84f-strange_loops_v1_visualization.png)
 
 A meditation on consciousness and recursion, with lyrical inspiration from Paul Simon's narrative storytelling style. The piece explores the philosophy of "strange loops" — the self-referential patterns that Douglas Hofstadter argues are the basis of consciousness.
 
