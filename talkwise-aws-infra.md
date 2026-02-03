@@ -272,4 +272,205 @@ The infrastructure provides a production-ready platform with:
 
 ---
 
+## Creating New Projects
+
+The infrastructure is designed for rapid project scaffolding. Two patterns are available:
+
+### Pattern 1: Scheduled Lambda (Recommended for Background Tasks)
+
+**Best for:** Cron jobs, webhooks, event processing, scheduled tasks
+
+**Time to deploy:** ~10 minutes
+
+#### Step-by-Step:
+
+```bash
+# 1. Copy the template
+cd talkwise-infra/projects
+cp -r project-x my-new-project
+
+# 2. Update configuration
+# - main.tf: Change project_name
+# - backend-*.hcl: Update state key path
+# - variables.tf: Update tags
+```
+
+**Create your Lambda function:**
+```
+my-new-project/
+└── lambdas/
+    └── my-task/
+        ├── package.json
+        ├── tsconfig.json
+        ├── esbuild.config.js
+        └── src/
+            └── index.ts
+```
+
+**Define schedules in `schedules.yaml`:**
+```yaml
+schedules:
+  - name: my-task
+    lambda_name: my-task-lambda
+    schedule_type: hourly  # or: every_15_min, daily, weekly
+    enabled: true
+    environments: [dev, production]
+```
+
+**Add secrets to SSM:**
+```bash
+aws ssm put-parameter \
+  --name "/my-new-project/dev/api-key" \
+  --value "your-api-key" \
+  --type "SecureString" \
+  --region us-east-2
+```
+
+**Deploy:**
+```bash
+make deploy e=dev
+```
+
+---
+
+### Pattern 2: ECS Fargate (Recommended for APIs/Services)
+
+**Best for:** REST APIs, WebSocket servers, long-running services
+
+**Time to deploy:** ~15-20 minutes (includes VPC, ALB, ECR)
+
+#### Step-by-Step:
+
+```bash
+# 1. Copy the template
+cd talkwise-infra/projects
+cp -r agent-factory my-api-service
+
+# 2. Update configuration
+# - main.tf: Change project_name, github_repo
+# - backend-*.hcl: Update state key path
+# - variables.tf: Update container_port, cpu, memory
+```
+
+**Create your Dockerfile:**
+```dockerfile
+FROM node:22-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY . .
+EXPOSE 3000
+HEALTHCHECK CMD node -e "require('http').get('http://localhost:3000/health')"
+CMD ["npm", "start"]
+```
+
+**Add secrets to Secrets Manager:**
+```bash
+aws secretsmanager create-secret \
+  --name "my-api-service/dev/api-key" \
+  --secret-string "sk-..." \
+  --region us-east-2
+```
+
+**Deploy infrastructure:**
+```bash
+make deploy e=dev
+```
+
+**Build and push container:**
+```bash
+ECR_URL=$(terraform output -raw ecr_repository_url)
+docker build -t $ECR_URL:latest .
+aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin $ECR_URL
+docker push $ECR_URL:latest
+
+# Force new deployment
+aws ecs update-service \
+  --cluster my-api-service-dev-cluster \
+  --service my-api-service-dev-api \
+  --force-new-deployment
+```
+
+---
+
+### Quick Reference: Which Pattern to Use?
+
+| Use Case | Pattern | Why |
+|----------|---------|-----|
+| Cron job (hourly/daily) | Lambda | Pay only when running |
+| Webhook handler | Lambda | Auto-scales, no idle cost |
+| Event processor | Lambda | Built-in EventBridge integration |
+| REST API | ECS | Persistent connections, predictable latency |
+| WebSocket server | ECS | Long-lived connections required |
+| Background worker | ECS | Continuous processing |
+| CPU-intensive task | ECS | More compute options |
+
+---
+
+### Environment Variables & Secrets
+
+**Lambda (SSM Parameter Store):**
+```typescript
+// Automatically injected as env vars
+const apiKey = process.env.API_KEY;
+
+// Path pattern: /{project}/{environment}/{key}
+// Example: /my-project/dev/api-key
+```
+
+**ECS (Secrets Manager):**
+```typescript
+// Mounted as env vars from Secrets Manager
+const apiKey = process.env.ANTHROPIC_API_KEY;
+
+// Secret name pattern: {project}/{environment}/{key}
+// Example: my-api-service/dev/anthropic-api-key
+```
+
+---
+
+### Makefile Commands
+
+| Command | Description |
+|---------|-------------|
+| `make init e=dev` | Initialize Terraform backend |
+| `make plan e=dev` | Preview changes |
+| `make deploy e=dev` | Deploy (auto-approve) |
+| `make logs e=dev` | Tail CloudWatch logs |
+| `make destroy e=dev` | Tear down infrastructure |
+
+---
+
+### CI/CD Integration
+
+Both patterns support GitHub Actions via OIDC (no long-lived credentials):
+
+```yaml
+# .github/workflows/deploy.yml
+jobs:
+  deploy:
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::ACCOUNT:role/my-project-dev-github-actions
+          aws-region: us-east-2
+```
+
+---
+
+### Cost Estimates
+
+| Pattern | Monthly Cost |
+|---------|--------------|
+| Lambda (hourly schedule) | $5-20 |
+| Lambda (every 15 min) | $10-50 |
+| ECS (1 task, 512 CPU) | $30-50 |
+| ECS + ALB + NAT | $80-120 |
+| ECS auto-scaling (1-4) | $30-200 |
+
+---
+
 *Note: This analysis is based on the Terraform configuration in the repository. Actual deployed resources may vary based on environment-specific variables and manual changes.*
