@@ -1,8 +1,24 @@
 # E-24: Vitaboom Checkout Experience (Sunset Shopify)
 
+> **Last Updated**: 2026-02-02
+> **Status**: Planning Complete - Ready for Development
+
 ## Executive Summary
 
-This epic replaces Vitaboom's current Shopify-based checkout and payment infrastructure with a custom checkout experience powered by Bankful. The goal is to eliminate Shopify as the payment gateway while retaining the core product catalog and subscription capabilities.
+This epic replaces Vitaboom's current Shopify-based checkout and payment infrastructure with a custom checkout experience powered by Bankful. The goal is to eliminate Shopify as the payment gateway while building our own subscription management system.
+
+### Key Decisions (Confirmed)
+
+| Decision | Answer |
+|----------|--------|
+| **Seal without Shopify?** | ❌ No - Seal will NOT work without Shopify. Building in-house subscription system. |
+| **Bankful Sandbox** | Not yet ready - added M-42 milestone to set this up |
+| **Existing Subscriptions** | Must migrate all active subscriptions from Seal/Shopify |
+| **Product Catalog** | Continue using Shopify for products during Phase 1. Eventually build customer-facing storefront with product selector. |
+| **Timeline** | Flexible - focus on documenting all work, adjust manpower as needed |
+| **Team Allocation** | Matt (frontend, has rough first pass), Scott + Serhii (backend integration) |
+
+---
 
 ## Current Architecture Analysis
 
@@ -13,6 +29,7 @@ This epic replaces Vitaboom's current Shopify-based checkout and payment infrast
    - Products filtered by type "Vitamin & Supplement"
    - Product metadata (variants, pricing, images) cached locally
    - Per-clinic visibility filtering
+   - **Decision**: Keep using Shopify for products in Phase 1
 
 2. **Order Management** (`shopify.service.ts`, `order.model.ts`)
    - Order creation via GraphQL `orderCreate` mutation
@@ -36,7 +53,7 @@ This epic replaces Vitaboom's current Shopify-based checkout and payment infrast
    - Sync clinic_name, banner_url, cart_url to Shopify customers
    - Used by Klaviyo for email personalization
 
-### What Seal Subscriptions Currently Provides
+### What Seal Subscriptions Currently Provides (To Be Replaced)
 
 1. **Subscription Management** (`sealSubscriptions.service.ts`)
    - Create, pause, resume, reactivate, cancel subscriptions
@@ -56,6 +73,7 @@ This epic replaces Vitaboom's current Shopify-based checkout and payment infrast
 
 ### Key Data Flows
 
+**Current Flow (Shopify + Seal):**
 ```
 Protocol Creation → Shopify Cart URL generated → Patient clicks link
                                                         ↓
@@ -70,6 +88,23 @@ Protocol Creation → Shopify Cart URL generated → Patient clicks link
                                     (If subscription) Seal manages recurring
 ```
 
+**New Flow (Bankful + In-House):**
+```
+Protocol Creation → Vitaboom Checkout URL → Patient clicks link
+                                                        ↓
+                                           Vitaboom Checkout App
+                                                        ↓
+                                    Bankful processes payment
+                                                        ↓
+                                    vitaboom-backend creates Order record
+                                                        ↓
+                                    Payment success → Commission calculated
+                                                        ↓
+                                    (If subscription) In-house system manages recurring
+```
+
+---
+
 ## Bankful API Capabilities
 
 Based on documentation research:
@@ -81,93 +116,51 @@ Based on documentation research:
 - **Invoicing**: Create, list, status
 - **Hosted Payment Page**: For checkout UI
 
-### Recurring/Subscription Approach
-Bankful integrates with Seal Subscriptions for recurring payments on Shopify. For non-Shopify setups, subscriptions would need to be managed by:
-1. **Bankful + Custom Backend**: Store card tokens, manage billing cycles internally
-2. **Seal Subscriptions Direct**: If Seal offers direct API access outside Shopify
-
 ### What Bankful Does NOT Provide
-- Native subscription management (relies on Seal)
+- Native subscription management
 - Product catalog management
 - Customer account management
 - Built-in webhooks (minimal webhook support)
 
-## Architecture Decision: Hybrid Approach
+### Architecture Decision
 
-Given that Seal Subscriptions is already deeply integrated and Bankful is designed to work with Seal, the recommended approach is:
+**Confirmed: In-House Subscription System**
 
-### Option A: Bankful + Seal Direct Integration (Recommended)
-- Keep Seal Subscriptions for recurring payment management
-- Use Bankful for payment processing (replacing Shopify Payments)
-- Build custom checkout frontend
-- Maintain product catalog in-house
-
-### Option B: Full In-House Subscription System
+Since Seal Subscriptions will NOT work without Shopify, we will:
 - Build subscription management from scratch
 - Use Bankful card vaulting for recurring charges
-- Maximum control but highest development cost
-
-**Recommendation: Option A** - minimizes risk and leverages existing Seal integration knowledge.
+- Own the full billing lifecycle
 
 ---
 
 ## Implementation Plan
 
-### Phase 1: Foundation & Research (M-37 Extended)
-**Target: 2026-01-31 to 2026-02-07**
+### Phase 1: Foundation & Setup
+**Target: 2026-02-10**
 
 #### M-37: Technical Discovery on Payment Gateways (existing)
 - [x] Deep dive into Bankful API documentation
 - [x] Understand card tokenization flow
 - [x] Research Bankful + Seal integration outside Shopify
-- [ ] Obtain Bankful sandbox credentials
+- [x] **Confirmed**: Seal won't work without Shopify
+- [ ] Obtain Bankful sandbox credentials (see M-42)
 - [ ] Test Bankful transaction API
-- [ ] Evaluate Seal Subscriptions direct API (non-Shopify)
 
-**Key Questions to Answer:**
-1. Can Seal Subscriptions work without Shopify storefront?
-2. Does Bankful have direct recurring billing, or must we use Seal?
-3. What webhooks does Bankful support for payment status?
+#### M-42: Set up Bankful sandbox environment (NEW)
+**Goal**: Obtain credentials and configure test environment
 
----
+**Tasks:**
+- Contact Bankful for sandbox credentials
+- Configure environment variables
+- Test basic transaction flow
+- Document API quirks/limitations
 
-### Phase 2: Product Catalog Independence (New Milestone)
-**Target: 2026-02-07 to 2026-02-14**
-
-#### M-42: Internal Product Catalog System
-**Goal**: Decouple product data from Shopify API
-
-**Backend Tasks:**
-1. Create `InternalProduct` model in database
-   - id, title, vendor, tags, price, imageUrl, variants
-   - suggestedServing, order (display order)
-   - suppcoProductId (for dropshipping)
-   - isActive, createdAt, updatedAt
-
-2. Create `ProductVariant` model
-   - id, productId, title (AM/Midday/PM)
-   - price, sku
-   - bankfulProductId (for payment mapping)
-
-3. Migration: Import products from Shopify → Internal catalog
-   - One-time import script
-   - Preserve existing IDs where possible
-
-4. Update `product.service.ts` to read from internal DB
-   - Keep Shopify as fallback during transition
-   - Feature flag: `USE_INTERNAL_CATALOG`
-
-5. Admin UI for product management (optional, can be phase 3)
-
-**Deliverables:**
-- Internal product catalog with all current products
-- API endpoints for CRUD operations
-- Backwards compatibility with existing protocol creation
+**Unblocks**: All payment integration work
 
 ---
 
-### Phase 3: Checkout Frontend (M-38 Extended)
-**Target: 2026-02-14 to 2026-02-28**
+### Phase 2: Design & Infrastructure
+**Target: 2026-02-14**
 
 #### M-38: Design Checkout and Storefront UX (existing)
 - Design checkout flow wireframes
@@ -175,8 +168,32 @@ Given that Seal Subscriptions is already deeply integrated and Bankful is design
 - Design cart experience
 - Design subscription selection UI
 
-#### M-43: Implement Checkout Frontend (New Repo)
+#### M-39: Redesign Landing Page (existing)
+- Update protocol short URLs to point to new checkout
+- SEO optimization
+- Mobile responsiveness
+- Marketing copy updates
+
+#### M-43: Internal Product Catalog (can be deferred)
+**Note**: Per Scott, we can continue using Shopify for product data during Phase 1. This milestone can be tackled later when building the full customer-facing storefront.
+
+**Goal**: Decouple product data from Shopify API (future phase)
+
+**Backend Tasks (for later):**
+1. Create `InternalProduct` model in database
+2. Create `ProductVariant` model
+3. Migration script: Import products from Shopify
+4. Update `product.service.ts` to read from internal DB
+5. Admin UI for product management
+
+---
+
+### Phase 3: Checkout Frontend
+**Target: 2026-02-28**
+
+#### M-44: Checkout Frontend Implementation
 **Goal**: Build `vitaboom-checkout` React application
+**Owner**: Matt (has rough first pass with dummy data)
 
 **Frontend Application Structure:**
 ```
@@ -203,7 +220,7 @@ vitaboom-checkout/
 ```
 
 **Key Features:**
-1. Load protocol by shortCode → display products
+1. Load protocol by shortCode → display products (from Shopify API initially)
 2. One-time purchase vs subscription toggle
 3. Quantity adjustments per time-of-day
 4. Discount code application
@@ -221,10 +238,11 @@ vitaboom-checkout/
 ---
 
 ### Phase 4: Backend Payment Integration
-**Target: 2026-02-21 to 2026-03-07**
+**Target: 2026-03-07**
 
-#### M-44: Bankful Payment Integration
+#### M-45: Bankful Payment Integration (Backend)
 **Goal**: Process payments via Bankful API
+**Owners**: Scott + Serhii
 
 **New Backend Services:**
 
@@ -276,26 +294,15 @@ GET  /api/checkout/protocols/:code # Get protocol for checkout display
 
 ---
 
-### Phase 5: Subscription Migration
-**Target: 2026-03-01 to 2026-03-14**
+### Phase 5: Subscription System
+**Target: 2026-03-14**
 
-#### M-45: Subscription Management Transition
-**Goal**: Handle recurring payments without Shopify
+#### M-46: In-House Subscription System
+**Goal**: Build subscription management to replace Seal
 
-**Approach A: Seal Subscriptions Direct** (if available)
-- Configure Seal to use Bankful directly
-- Minimal code changes to existing integration
-- Seal handles billing cycles and retries
+**New Models:**
 
-**Approach B: In-House Subscription System**
-- New `Subscription` model in database
-- Cron job for processing due subscriptions
-- Payment retry logic with exponential backoff
-- Subscription status management (active, paused, cancelled)
-
-**Required Components:**
-
-1. `subscription.model.ts` (enhanced)
+1. `Subscription` model
    ```typescript
    interface SubscriptionAttributes {
      id: string;
@@ -312,24 +319,36 @@ GET  /api/checkout/protocols/:code # Get protocol for checkout display
    }
    ```
 
-2. `subscriptionBilling.service.ts`
+**Services:**
+
+1. `subscriptionBilling.service.ts`
    - Process due subscriptions daily
    - Create orders for successful payments
-   - Handle failed payments with retry
+   - Handle failed payments with retry (exponential backoff)
    - Send billing notifications
 
-3. Cron job: `processSubscriptions` (runs daily)
+2. Cron job: `processSubscriptions` (runs daily)
    - Query subscriptions where nextBillingDate <= today
    - Charge via Bankful vaulted card
    - Create order record on success
    - Update nextBillingDate
 
+#### M-47: Migrate Existing Subscriptions from Seal
+**Goal**: Move all active subscriptions to new system
+
+**Tasks:**
+1. Export all active subscriptions from Seal/Shopify
+2. Create migration script to import into new subscription system
+3. Map customer payment methods to Bankful vaulted cards
+4. Verify billing dates and amounts match
+5. Test with subset before full migration
+
 ---
 
-### Phase 6: Discount System Migration
-**Target: 2026-03-07 to 2026-03-14**
+### Phase 6: Supporting Systems
+**Target: 2026-03-14**
 
-#### M-46: Internal Discount System
+#### M-48: Internal Discount System
 **Goal**: Replace Shopify discount codes
 
 **New Models:**
@@ -362,10 +381,10 @@ GET  /api/checkout/protocols/:code # Get protocol for checkout display
 
 ---
 
-### Phase 7: Webhook & Commission System
-**Target: 2026-03-14 to 2026-03-21**
+### Phase 7: Event Handling
+**Target: 2026-03-21**
 
-#### M-47: Payment Event Handling
+#### M-49: Payment Event Handling
 **Goal**: Process Bankful payment events
 
 **If Bankful supports webhooks:**
@@ -388,28 +407,17 @@ GET  /api/checkout/protocols/:code # Get protocol for checkout display
 
 ---
 
-### Phase 8: Landing Page & Marketing
-**Target: 2026-02-14 to 2026-02-28**
+### Phase 8: Production Cutover
+**Target: 2026-03-28**
 
-#### M-39: Redesign Landing Page (existing)
-- Update protocol short URLs to point to new checkout
-- SEO optimization
-- Mobile responsiveness
-- Marketing copy updates
-
----
-
-### Phase 9: Migration & Cutover
-**Target: 2026-03-14 to 2026-03-21**
-
-#### M-48: Production Cutover
+#### M-50: Production Cutover
 **Goal**: Switch from Shopify to Bankful
 
 **Pre-Migration Checklist:**
-- [ ] All existing product data migrated
 - [ ] Bankful production credentials configured
 - [ ] New checkout deployed and tested
 - [ ] Subscription billing tested end-to-end
+- [ ] All existing subscriptions migrated
 - [ ] Commission calculation verified
 - [ ] Rollback plan documented
 
@@ -422,7 +430,7 @@ GET  /api/checkout/protocols/:code # Get protocol for checkout display
 
 **Post-Migration:**
 - Monitor commission accuracy
-- Support existing Seal subscriptions (may still process through Shopify)
+- Decommission Seal integration
 - Document any manual interventions needed
 
 ---
@@ -430,22 +438,22 @@ GET  /api/checkout/protocols/:code # Get protocol for checkout display
 ## Risk Assessment
 
 ### High Risk
-1. **Seal Subscriptions without Shopify**: Unknown if Seal works standalone
-   - Mitigation: Early research and POC in Phase 1
+1. **In-house subscription billing**: Building from scratch increases complexity
+   - Mitigation: Start simple, iterate. Use proven patterns for retry logic.
 
 2. **Payment processing reliability**: Bankful is less battle-tested than Stripe/Shopify
-   - Mitigation: Thorough testing, error handling, monitoring
+   - Mitigation: Thorough testing, error handling, monitoring, alerting
 
 ### Medium Risk
-3. **Existing subscription continuity**: How to handle in-flight Seal subscriptions
-   - Mitigation: Maintain parallel systems during transition
+3. **Subscription migration**: Moving existing customers without disruption
+   - Mitigation: Test with subset first, maintain parallel systems briefly
 
 4. **Commission accuracy**: Must match existing calculations exactly
    - Mitigation: Side-by-side testing before cutover
 
 ### Low Risk
-5. **Product catalog migration**: Well-understood data, straightforward import
-6. **Frontend development**: Standard React patterns, experienced team
+5. **Frontend development**: Matt has rough pass, standard React patterns
+6. **Backend integration**: Experienced team (Scott + Serhii)
 
 ---
 
@@ -459,36 +467,35 @@ GET  /api/checkout/protocols/:code # Get protocol for checkout display
 
 ---
 
-## Timeline Summary
+## Timeline Summary (Final)
 
-| Phase | Milestone | Target Date |
-|-------|-----------|-------------|
-| 1 | M-37: Technical Discovery | 2026-02-07 |
-| 2 | M-42: Internal Product Catalog | 2026-02-14 |
-| 3 | M-38: Design Checkout UX | 2026-02-14 |
-| 3 | M-43: Implement Checkout Frontend | 2026-02-28 |
-| 4 | M-44: Bankful Payment Integration | 2026-03-07 |
-| 5 | M-45: Subscription Management | 2026-03-14 |
-| 6 | M-46: Internal Discount System | 2026-03-14 |
-| 7 | M-47: Payment Event Handling | 2026-03-21 |
-| 8 | M-39: Redesign Landing Page | 2026-02-28 |
-| 9 | M-48: Production Cutover | 2026-03-21 |
+| # | Milestone | Target | Owner |
+|---|-----------|--------|-------|
+| M-37 | Technical discovery on payment gateways | 2026-01-31 | - |
+| M-38 | Design checkout and storefront UX | 2026-01-31 | - |
+| M-42 | Set up Bankful sandbox environment | 2026-02-10 | TBD |
+| M-39 | Redesign landing page | 2026-02-14 | - |
+| M-43 | Internal Product Catalog | 2026-02-14 | (deferred) |
+| M-44 | Checkout Frontend Implementation | 2026-02-28 | Matt |
+| M-45 | Bankful Payment Integration (Backend) | 2026-03-07 | Scott, Serhii |
+| M-46 | In-House Subscription System | 2026-03-14 | Scott, Serhii |
+| M-47 | Migrate Existing Subscriptions from Seal | 2026-03-14 | TBD |
+| M-48 | Internal Discount System | 2026-03-14 | TBD |
+| M-49 | Payment Event Handling | 2026-03-21 | Scott, Serhii |
+| M-50 | Production Cutover | 2026-03-28 | Team |
 
-**Total Duration**: ~7 weeks (2026-02-07 to 2026-03-21)
-**Target Date from Epic**: 2026-03-06 (may need extension to 2026-03-21)
+**Total Duration**: ~8 weeks
+**Team**: Matt (frontend), Scott + Serhii (backend integration)
 
 ---
 
-## Open Questions for Scott
+## Future Phase: Customer-Facing Storefront
 
-1. **Seal Subscriptions**: Have you confirmed Seal can work without Shopify storefront? Or should we plan for in-house subscription management?
+Per Scott's note, the long-term plan includes building a customer-facing storefront with a product selector similar to Shopify's. This would involve:
 
-2. **Bankful Sandbox**: Do you have sandbox credentials ready for testing?
+1. Internal product catalog (M-43, deferred from Phase 1)
+2. Product browsing UI for customers
+3. Category/search functionality
+4. Admin UI for product management
 
-3. **Existing Subscriptions**: For patients already on Seal subscriptions through Shopify, what's the migration plan? Keep them on Shopify until renewal?
-
-4. **Product Catalog Management**: Is there a need for an admin UI to manage products, or is the current Shopify-synced approach sufficient during transition?
-
-5. **Timeline**: The epic target is 2026-03-06, but thorough implementation may need until 2026-03-21. Is a 2-week extension acceptable?
-
-6. **Team Allocation**: Who will work on the checkout frontend (new repo)? Is this Vitaboom team or shared resources?
+This is out of scope for the initial E-24 delivery but should be planned as a follow-up epic.
