@@ -1,7 +1,7 @@
 # Talkwise AWS Infrastructure Analysis
 
-**Region:** us-east-2
-**Repository:** [FractalLabsDev/talkwise-infra](https://github.com/FractalLabsDev/talkwise-infra)
+**Region:** us-east-2  
+**Repository:** [FractalLabsDev/talkwise-infra](https://github.com/FractalLabsDev/talkwise-infra)  
 **Analysis Date:** 2026-02-03
 
 ---
