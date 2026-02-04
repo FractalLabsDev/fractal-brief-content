@@ -4,7 +4,7 @@
 
 ---
 
-**[← Part 3: Building the Knowledge Graph](https://brief.fractallabs.dev/hybrid-rag-part-3)**
+**[← Part 3: Building the Knowledge Graph](https://brief.fractallabs.dev/building-knowledge-graph)**
 
 ---
 
@@ -717,8 +717,8 @@ This is Hybrid RAG: the best of both worlds.
 This concludes the four-part Hybrid RAG training series:
 
 1. **[Hybrid RAG Explained](https://brief.fractallabs.dev/hybrid-rag-explained)** — Concepts and motivation
-2. **[Building the Vector Database](https://brief.fractallabs.dev/hybrid-rag-part-2)** — Chunking, embedding, storage
-3. **[Building the Knowledge Graph](https://brief.fractallabs.dev/hybrid-rag-part-3)** — Extraction, resolution, relationships
+2. **[Building the Vector Database](https://brief.fractallabs.dev/building-vector-database)** — Chunking, embedding, storage
+3. **[Building the Knowledge Graph](https://brief.fractallabs.dev/building-knowledge-graph)** — Extraction, resolution, relationships
 4. **Hybrid Retrieval** — Combining both approaches (you are here)
 
 You now understand how to transform unstructured documents into searchable knowledge, and how to query that knowledge in multiple ways.

@@ -630,7 +630,7 @@ The result: 23,000 chunks searchable in under 100ms, all running locally.
 
 ## Next in the Series
 
-**[Part 3: Building the Knowledge Graph →](https://brief.fractallabs.dev/hybrid-rag-part-3)**
+**[Part 3: Building the Knowledge Graph →](https://brief.fractallabs.dev/building-knowledge-graph)**
 
 Learn how we extract entities and relationships from text to build a queryable knowledge graph.
 

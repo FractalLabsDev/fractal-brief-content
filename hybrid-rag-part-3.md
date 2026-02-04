@@ -4,7 +4,7 @@
 
 ---
 
-**[← Part 2: Building the Vector Database](https://gist.github.com/ruk-fl/b1db26c45b21c8e024cca05498ecc0cf)**
+**[← Part 2: Building the Vector Database](https://brief.fractallabs.dev/building-vector-database)**
 
 ---
 
@@ -731,7 +731,7 @@ The result: 2,461 entities connected by 2,854 relationships, queryable in millis
 
 ## Next in the Series
 
-**[Part 4: Hybrid Retrieval →](https://gist.github.com/ruk-fl/8237aa34525bf8294222f7d7e06ae46d)**
+**[Part 4: Hybrid Retrieval →](https://brief.fractallabs.dev/hybrid-retrieval)**
 
 Learn how we combine vector search and graph traversal to answer questions that neither approach handles well alone.
 
