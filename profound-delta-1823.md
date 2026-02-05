@@ -3,12 +3,91 @@
 > **Context**: Understanding Shopify's checkout customization capabilities for E-24 (Vitaboom Checkout Experience - Sunset Shopify)
 > **URL Analyzed**: `admin.shopify.com/store/vitaboom-new/settings/checkout/editor/profiles/868090162?page=checkout`
 > **Date**: 2026-02-05
+> **Updated**: 2026-02-05 with actual Vitaboom configuration from admin screenshots
 
 ---
 
 ## Executive Summary
 
 Shopify's Checkout Editor is a no-code visual tool that allows merchants to customize the appearance and functionality of their checkout, thank you, and order status pages. Understanding these capabilities is essential for E-24 as we determine which features to replicate in our custom Bankful-powered checkout.
+
+**This document now includes Vitaboom's actual current configuration** extracted from admin screenshots.
+
+---
+
+## Vitaboom Current Configuration (Live)
+
+### Branding Settings
+| Setting | Current Value |
+|---------|---------------|
+| **Logo** | Vitaboom logo (pink leaf + wordmark) |
+| **Logo Width** | 300px |
+| **Logo Alignment** | Left, Center, Right options (current: appears centered) |
+| **Logo Position** | Full width |
+
+### Background Colors
+| Element | Hex Value |
+|---------|-----------|
+| **Background 1** (checkout form) | `#FFFFFF` (white) |
+| **Background 2** (order summary + customer account pages) | `#F5F5F5` (light gray) |
+
+### Brand Colors
+| Element | Hex Value |
+|---------|-----------|
+| **Accent** | `#1C1C1C` (near-black) |
+| **Buttons** | `#1C1C1C` (near-black) |
+| **Error** | `#DD1D1D` (red) |
+| **Fields and cards** | Transparent / White options |
+
+### Typography
+| Element | Setting |
+|---------|---------|
+| **Headings** | Default |
+| **Body** | Default |
+
+### Layout & Features
+| Setting | Value |
+|---------|-------|
+| **Checkout Layout** | One-page |
+| **Address Autocompletion** | OFF |
+| **Buy Again Button** | OFF (allows customers to reorder) |
+
+### Installed Apps/Extensions
+From the left sidebar:
+
+**Klaviyo: Email Marketing & SMS**
+- ✅ Klaviyo Opt-in at checkout (active)
+
+**UpPromote Affiliate**
+- Post-purchase signup
+
+**Seal Subscriptions**
+- Customer Portal Page ✅
+- [Old version] Subscription...
+- Link to legacy customer portal
+- Access subscriptions card
+
+### Express Checkout
+- Shop Pay (enabled)
+- PayPal (enabled)
+- Google Pay (enabled)
+
+### Checkout Form Fields
+Currently collecting:
+- **Contact**: Email or mobile phone number
+- **Marketing opt-in**: "Email me with news and offers (Vitaboom will NOT share your information)"
+- **Delivery**: Country/Region, First name, Last name, Address, Apartment/suite (optional), City, State, ZIP code
+- **Phone**: Optional, with country selector
+- **SMS opt-in**: "Text me with Order & Subscription updates"
+- **Shipping method**: Standard (Example) - $10.00
+- **Payment**: Credit card (Visa, Mastercard, Amex, +5 more)
+
+### Order Summary Sidebar
+- Product image + name + quantity badge
+- Discount code input with Apply button
+- Subtotal
+- Shipping (with info tooltip)
+- Total (USD)
 
 ---
 
@@ -195,27 +274,53 @@ Based on E-24 planning docs and team discussions:
 5. **Shipping Address Collection**: US addresses primarily
 6. **Bankful Payment Integration**: Card tokenization, vaulting
 
-### Branding Requirements
-- Vitaboom logo
-- Brand colors (likely sourced from vitaboom-web)
-- Mobile-first design
-- Clean, trustworthy aesthetic (health/wellness space)
+### Branding Requirements (Extracted from Current Config)
+| Element | Value to Replicate |
+|---------|-------------------|
+| **Logo** | Vitaboom logo (pink leaf + "vitaboom" wordmark) |
+| **Logo width** | 300px |
+| **Primary background** | `#FFFFFF` |
+| **Secondary background** | `#F5F5F5` |
+| **Accent/Button color** | `#1C1C1C` |
+| **Error color** | `#DD1D1D` |
+| **Typography** | System default (clean, readable) |
+
+### Apps to Consider Replacing
+| Current App | Function | E-24 Approach |
+|-------------|----------|---------------|
+| Seal Subscriptions | Recurring billing | **Build in-house** (confirmed) |
+| Klaviyo Opt-in | Marketing consent | Simple checkbox (can integrate later) |
+| UpPromote | Affiliate tracking | Defer to Phase 2+ |
+
+### Current UX Patterns to Preserve
+- One-page checkout flow
+- Express checkout options prominent at top
+- Marketing opt-in with privacy assurance text
+- SMS subscription updates opt-in
+- Discount code in order summary sidebar
+- "Did you mean [ZIP]?" address validation helper
 
 ---
 
 ## 8. Recommendations
 
 ### Immediate Actions
-1. **Screenshot current Shopify checkout** for reference during development
-2. **Document exact color values and fonts** used in current checkout
-3. **List any custom fields or extensions** currently active
-4. **Identify checkout conversion rate** as baseline metric
+1. ~~Screenshot current Shopify checkout for reference~~ ✅ Done (screenshots provided by Serhii)
+2. ~~Document exact color values and fonts~~ ✅ Done (see Vitaboom Current Configuration section)
+3. ~~List any custom fields or extensions~~ ✅ Done (Klaviyo, UpPromote, Seal)
+4. **Identify checkout conversion rate** as baseline metric (still needed)
 
 ### Development Approach
 1. Start with functional MVP (contact → shipping → payment → confirm)
-2. Add branding in parallel (logo, colors, fonts)
-3. Defer advanced customization (trust badges, upsells) to Phase 2
-4. Test mobile experience heavily
+2. **Apply exact branding values**:
+   - Logo: 300px width, centered
+   - Backgrounds: `#FFFFFF` main, `#F5F5F5` order summary
+   - Buttons: `#1C1C1C` (near-black)
+   - Error states: `#DD1D1D`
+3. Replicate one-page layout (not three-page)
+4. Include discount code field in sidebar
+5. Test mobile experience heavily
+6. Defer Klaviyo/UpPromote integrations to Phase 2
 
 ---
 
