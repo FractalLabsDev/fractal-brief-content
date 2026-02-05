@@ -23,7 +23,7 @@
 
 **Matt Meeks** raised the need for a "second brain" or "company brain" to help the Elanah team manage the overwhelming volume of communications and context across their business development efforts.
 
-> **Matt Meeks:** "I mentioned to Anthony today that I think having a collective email address called like 'second brain at Elanah' or something that automatically is BCC'd on everything will allow us to exercise the benefits of having Gemini in our Gmail... If every email everybody sends goes to Second Brain Elanah, then we can Google or we can do Gemini searches and build queries inside Google without having to really hunt for information."
+> **Matt Meeks:** "I mentioned to Antony today that I think having a collective email address called like 'second brain at Elanah' or something that automatically is BCC'd on everything will allow us to exercise the benefits of having Gemini in our Gmail... If every email everybody sends goes to Second Brain Elanah, then we can Google or we can do Gemini searches and build queries inside Google without having to really hunt for information."
 
 ### The Core Problem Matt Described
 
@@ -62,7 +62,7 @@ The Elanah team struggles with:
 
 **Key points Austin made:**
 
-1. **Infrastructure exists:** "We'd be happy to use Alana as a test case... bringing in all of the meeting transcripts, all the emails, everything, putting that into semantic search, Knowledge Graph..."
+1. **Infrastructure exists:** "We'd be happy to use Elanah as a test case... bringing in all of the meeting transcripts, all the emails, everything, putting that into semantic search, Knowledge Graph..."
 
 2. **Identity customization:** "The idea is when we would productize what we call Ruk, you'd be able to give it a different name, give it different values and identity, and still have access to all the same tools."
 
@@ -108,7 +108,7 @@ Sherry presented research on Knowledge Graphs vs. Context Graphs (Palantir's app
 
 ---
 
-## Anthony's Framing
+## Antony's Framing
 
 Likened the need to "an FBI crime ring mafia breakdown" - a social/human network overlay to visualize connections and decision paths.
 
