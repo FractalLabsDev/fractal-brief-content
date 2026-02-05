@@ -2,6 +2,8 @@
 
 *Part 1 of the Hybrid RAG Training Series*
 
+!audio[Listen to this article](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/05/09bd3557-ac2f-4993-9629-6cd3fe9d3613-hybrid-rag-podcast-v2.mp3)
+
 ---
 
 ## Series Overview
