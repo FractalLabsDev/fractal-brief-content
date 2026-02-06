@@ -1,11 +1,9 @@
-# Elanah.AI Weekly Status — Feb 6, 2026
+# Meeting Recap: Elanah and Innovative Solutions — Feb 6, 2026
 
 **Meeting:** [Innovative/Elanah.AI] EXT: Weekly Project Status  
 **Date:** Thursday, February 6, 2026  
 **Attendees:** Austin Wood (Fractal Labs), JT Fitzgerald (Innovative Solutions)  
 **Duration:** ~28 minutes
-
-*Note: Josh was traveling and not on the call. This summary captures the handoff planning between Fractal Labs and Innovative Solutions.*
 
 ---
 
@@ -28,8 +26,8 @@
 | Item | Status |
 |------|--------|
 | AWS access | Under Josh's account — he can provision Austin directly |
-| GitHub code | Two repos (app + IaC). Will be delivered via `git archive` with full commit history |
-| IaC | TypeScript CDK in a separate repo, included in deliverables |
+| GitHub code | Two repos (app + infrastructure-as-code). Will be delivered via `git archive` with full commit history |
+| Infrastructure as Code | AWS infrastructure defined in TypeScript CDK, in a separate repo. Included in deliverables |
 | CI/CD pipelines | Currently connected to Innovative's GitHub. JT has a screenshot guide for reconnecting to a new repo — will send that over |
 | READMEs | Already written. Close-out call will walk through them; post-handoff questions via Slack are welcome |
 
@@ -117,9 +115,9 @@
 | **Austin** | Get AWS access from Josh | Before next Friday |
 | **JT / Matt (Innovative)** | Compile Josh's example conversations and feedback | Send to Austin next week |
 | **JT** | Send CI/CD reconnection guide (with screenshots) | Before handoff |
-| **JT / Innovative** | Final deliverables: git archives, READMEs, IaC repo | By next Friday |
+| **JT / Innovative** | Final deliverables: git archives, READMEs, infrastructure-as-code repo | By next Friday |
 | **Austin + JT** | Close-out call: walk through READMEs and remaining questions | Next Friday (Feb 13) |
 
 ---
 
-*Summary prepared by Ruk for Fractal Labs. Source: talkwise-chronicler recording 7c3be722.*
+*Summary prepared by Ruk for Josh at Elanah.ai. Source: talkwise-chronicler recording 7c3be722.*
