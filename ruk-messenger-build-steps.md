@@ -1,4 +1,4 @@
-# Ruk Messenger: Build Steps
+# Ruk Mobile: Build Steps
 
 ## Part 1: Austin's Steps (One-Time)
 
@@ -6,15 +6,15 @@
 
 ```bash
 cd ~/Code
-mkdir ruk-messenger && cd ruk-messenger
+mkdir ruk-mobile && cd ruk-mobile
 git init
-gh repo create FractalLabsDev/ruk-messenger --private --source=. --remote=origin
+gh repo create FractalLabsDev/ruk-mobile --private --source=. --remote=origin
 ```
 
 ### Step 2: Initialize React Native
 
 ```bash
-npx @react-native-community/cli init RukMessenger --package-name=dev.fractallabs.rukmessenger --pm npm
+npx @react-native-community/cli init RukMobile --package-name=dev.fractallabs.rukmobile --pm npm
 ```
 
 This creates the default RN structure. We'll reorganize.
@@ -23,9 +23,9 @@ This creates the default RN structure. We'll reorganize.
 
 ```bash
 # Move generated content up to repo root
-mv RukMessenger/* .
-mv RukMessenger/.* . 2>/dev/null
-rmdir RukMessenger
+mv RukMobile/* .
+mv RukMobile/.* . 2>/dev/null
+rmdir RukMobile
 ```
 
 ### Step 4: Install Core Dependencies
@@ -67,7 +67,7 @@ git push -u origin main
 
 Edit `~/Code/RUK/.claude/settings.json` and add to `additionalDirectories`:
 ```json
-"../ruk-messenger"
+"../ruk-mobile"
 ```
 
 ### Step 9: Verify Build
@@ -87,13 +87,13 @@ Run these on ruk-macmini after Austin completes Part 1:
 
 ```bash
 cd ~/Code
-git clone git@github.com:FractalLabsDev/ruk-messenger.git
+git clone git@github.com:FractalLabsDev/ruk-mobile.git
 ```
 
 ### 2. Install Dependencies
 
 ```bash
-cd ~/Code/ruk-messenger
+cd ~/Code/ruk-mobile
 npm install
 ```
 
@@ -101,7 +101,7 @@ npm install
 
 Edit `~/Code/RUK/.claude/settings.json` and add to `additionalDirectories`:
 ```json
-"../ruk-messenger"
+"../ruk-mobile"
 ```
 
 ### 4. iOS Build Dependencies (if not already installed)
@@ -114,7 +114,7 @@ xcode-select --install
 sudo gem install cocoapods
 
 # Install iOS pods
-cd ~/Code/ruk-messenger/ios
+cd ~/Code/ruk-mobile/ios
 pod install
 ```
 
@@ -150,7 +150,7 @@ Once the repo is cloned to Mac Mini with `additionalDirectories` configured:
 After setup, from either machine:
 
 ```bash
-cd ~/Code/ruk-messenger
+cd ~/Code/ruk-mobile
 npm start          # Metro bundler
 npm run ios        # iOS simulator (requires Xcode)
 npm run android    # Android emulator (requires Android Studio)
@@ -163,7 +163,7 @@ npm run lint       # ESLint
 ## Project Structure After Init
 
 ```
-ruk-messenger/
+ruk-mobile/
 ├── App.tsx
 ├── package.json
 ├── tsconfig.json

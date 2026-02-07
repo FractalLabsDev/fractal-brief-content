@@ -1,4 +1,4 @@
-# Ruk Messenger: MVP Plan
+# Ruk Mobile: MVP Plan
 
 **The vision:** An Austin-only messaging app combining Telegram's voice-first UX with Slack's threading model. Direct channel to Ruk, optimized for voice memos and threaded conversations.
 
@@ -19,7 +19,7 @@
 ### Project Structure
 
 ```
-ruk-messenger/
+ruk-mobile/
 ├── App.tsx                 # QueryClient, SafeArea, ThemeProvider
 ├── src/
 │   ├── components/
