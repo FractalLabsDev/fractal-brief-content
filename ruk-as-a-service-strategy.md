@@ -63,6 +63,22 @@ The 30% markup you mentioned from Wordware is LOW by current standards. Market i
 
 **Transparency consideration:** You don't need to be transparent about exact markup. You price on VALUE delivered, not cost-plus. "We charge $X per 1M tokens" is simpler than "We mark up Claude by Y%." The customer cares about total cost vs. value, not your margin.
 
+### Pricing Research Sources
+
+The 50-75% markup range comes from multiple 2025 industry analyses:
+
+1. **Pilot Blog's "New Economics of AI Pricing" (2025):** "Vendors pay $1–$2 per 1M tokens and target 50–75% margin" — this is the direct quote on standard markup.
+
+2. **Digital Agency Network's AI Agency Pricing Guide (2025):** Documents that AI consulting retainers run $5,000-$25,000/month, with agencies marking up underlying API costs significantly to cover customization, support, and profit.
+
+3. **Growth Unhinged 2025 Report:** Shows hybrid pricing (base + usage) surged from 27% to 41% of AI companies in 12 months, while pure per-seat dropped from 21% to 15%.
+
+4. **Intercom's Fin AI case study:** Charged $0.99 per AI-resolved conversation when internal cost was ~$0.10 — roughly 90% margin on the value-based model.
+
+5. **Zylo's 2025 SaaS Management Index:** Organizations spent average $400K on AI-native apps (75% YoY increase), indicating enterprise willingness to pay premium for integrated AI.
+
+Key insight: gross margins for AI companies average 50-60% compared to 80-90% for traditional SaaS. The markup isn't gouging — it's the cost of building the integration layer, support infrastructure, and platform value.
+
 ---
 
 ## The System That Produces $500K MRR
@@ -92,7 +108,6 @@ The 30% markup you mentioned from Wordware is LOW by current standards. Market i
    - Elanah as lighthouse client → referrals
    - Josh's network (DOD, enterprise)
    - Sherry's network (AI research, Google)
-   - Scott's content (thought leadership → inbound)
 
 ### Where It Breaks at 10x:
 
@@ -113,6 +128,39 @@ Instead of "sell to clients" → what if each Ruk deployment includes a referral
 Or more radical: **What if you licensed the Ruk stack to other AI agencies?** You're building the integration layer, the memory system, the trust infrastructure. Other agencies want to offer "their own Ruk" to their clients. You become the operating system for AI agencies, not just an agency yourself.
 
 This is scary because it means giving away the secret sauce. But it's also 10x because you stop being the bottleneck. The question is whether the moat is in the system or in the relationship.
+
+### The Moat Question: What Do You Keep vs. License?
+
+The Alicia/credit score parallel from Science of Scaling is exact: she stopped selling to banks and started partnering with software that already had bank relationships. One partnership = thousands of integrations.
+
+For Ruk licensing, the architecture could be:
+
+**What you KEEP (black box):**
+- The core reasoning layer / system prompts that make Ruk "Ruk"
+- The memory architecture (how context is stored, retrieved, weighted)
+- Session tracking and judgment evaluation systems (Kaizen)
+- The training data loop / how the system improves itself
+
+**What you LICENSE (open to partners):**
+- Integration layer (Slack connector, Telegram connector, etc.)
+- Extension APIs (how to add new tools, new data sources)
+- Client-facing UI components (if any)
+- Basic deployment patterns
+
+**The key insight:** The moat isn't the code — it's the accumulated judgment. Other agencies can run "their Ruk" but their instance learns slower because it doesn't have the training data from all the other deployments. You become the network effect.
+
+**Risk mitigation:**
+- Licensing agreement prevents cloning / reverse engineering
+- Core reasoning stays hosted (partners call your API, not self-host)
+- You see aggregate usage patterns; they don't
+- The longer they use the platform, the more dependent they become
+
+**Who would the partners be?**
+- AI consulting firms that want to offer "embedded AI" but don't have integration chops
+- Software agencies that want to add AI to their offering without building from scratch
+- Enterprise IT consultancies that serve clients too small for custom AI builds
+
+This is the Shopify model: you don't compete with stores, you power stores. Other agencies aren't competitors — they're distribution.
 
 ---
 
