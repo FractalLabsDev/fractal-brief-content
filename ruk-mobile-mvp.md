@@ -1,299 +1,228 @@
 # Ruk Mobile: MVP Plan
 
+**Last updated:** 2026-02-07
+**Status:** Phases 1-3 Complete | Phase 4 In Progress
+
 **The vision:** An Austin-only messaging app combining Telegram's voice-first UX with Slack's threading model. Direct channel to Ruk, optimized for voice memos and threaded conversations.
+
+---
+
+## Implementation Status
+
+### Phase 1: Core Scaffold ✅ COMPLETE
+
+| Task | Status |
+|------|--------|
+| React Native 0.77 bare workflow | ✅ Done |
+| iOS/Android project configuration | ✅ Done |
+| Navigation (React Navigation 7) | ✅ Done |
+| State management (Zustand) | ✅ Done |
+| Server state (React Query) | ✅ Done |
+| Message Hub API client | ✅ Done |
+| Dark theme system | ✅ Done |
+| TypeScript types | ✅ Done |
+
+**Key files:**
+- `App.tsx` - Root with QueryClient, SafeArea, navigation
+- `src/services/api.ts` - Full message-hub API client
+- `src/store/conversationStore.ts` - Zustand with optimistic updates
+- `src/theme/colors.ts` - Dark theme palette
+- `src/types/message.ts` - Message, Conversation, Thread types
+
+### Phase 2: Core Screens ✅ COMPLETE
+
+| Task | Status |
+|------|--------|
+| Conversation list screen | ✅ Done |
+| Chat screen with message list | ✅ Done |
+| Thread screen | ✅ Done |
+| Message bubbles (in/out styling) | ✅ Done |
+| Collapsible long messages | ✅ Done |
+| File attachment display | ✅ Done |
+| Reaction display | ✅ Done |
+| Timestamp grouping | ✅ Done |
+| Error handling & retry | ✅ Done |
+| Loading states | ✅ Done |
+| Auto-scroll to bottom | ✅ Done |
+| Keyboard avoiding view | ✅ Done |
+| Unread badge on conversations | ✅ Done |
+
+**Key files:**
+- `src/screens/ConversationListScreen.tsx`
+- `src/screens/ChatScreen.tsx`
+- `src/screens/ThreadScreen.tsx`
+- `src/components/MessageBubble.tsx`
+
+### Phase 3: Voice Messages ✅ COMPLETE
+
+| Task | Status |
+|------|--------|
+| Voice recorder component | ✅ Done |
+| Recording animation (pulse) | ✅ Done |
+| Recording timer display | ✅ Done |
+| Voice player component | ✅ Done |
+| Playback progress bar | ✅ Done |
+| Play/pause controls | ✅ Done |
+| Voice message upload to API | ✅ Done |
+
+**Key files:**
+- `src/components/VoiceRecorder.tsx` - Pulsing animation, timer
+- `src/components/VoicePlayer.tsx` - Progress bar, play/pause
+
+### Phase 4: Polish & UX 🔄 IN PROGRESS
+
+| Task | Status |
+|------|--------|
+| Optimistic message sending | ✅ Done |
+| Unread badges | ✅ Done |
+| Pull to refresh | ❌ Not started |
+| Haptic feedback | ❌ Not started |
+| Empty state designs | ❌ Not started |
+| Splash screen | ❌ Not started |
+| App icon | ❌ Not started |
+
+### Phase 5: Device Features ❌ NOT STARTED
+
+| Task | Status |
+|------|--------|
+| Push notifications (APNS direct) | ❌ Not started |
+| Background message fetch | ❌ Not started |
+| Notification badges | ❌ Not started |
+
+### Phase 6: Advanced Features ❌ NOT STARTED
+
+| Task | Status |
+|------|--------|
+| Message search | ❌ Not started |
+| Image/file upload | ❌ Not started |
+| Typing indicators | ❌ Not started |
+| Read receipts | ❌ Not started |
+| Deep linking | ❌ Not started |
 
 ---
 
 ## Architecture Overview
 
-### Foundation (from next-health-mobile)
+### Tech Stack (Implemented)
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
 | Runtime | React Native 0.77 (bare) | Native iOS/Android |
-| State | Zustand + persist | Local state + offline |
+| State | Zustand | Local state with optimistic updates |
 | Data | React Query | Server state + caching |
 | Navigation | React Navigation 7 | Native stack navigation |
-| UI | @rneui/themed | Component library |
+| Audio | react-native-audio-recorder-player | Voice recording/playback |
 
-### Project Structure
+### Project Structure (Current)
 
 ```
 ruk-mobile/
-├── App.tsx                 # QueryClient, SafeArea, ThemeProvider
+├── App.tsx                 # QueryClient, SafeArea, StatusBar
 ├── src/
 │   ├── components/
-│   │   ├── MessageBubble/  # Text + audio messages
-│   │   ├── ThreadView/     # Collapsible thread UI
-│   │   ├── VoiceRecorder/  # Record button + waveform
-│   │   └── AudioPlayer/    # Playback with scrubbing
-│   ├── hooks/
-│   │   ├── apis/           # React Query hooks
-│   │   │   ├── useConversations.ts
-│   │   │   ├── useMessages.ts
-│   │   │   └── useSendMessage.ts
-│   │   ├── useAudioRecorder.ts
-│   │   └── useAudioPlayer.ts
-│   ├── services/
-│   │   ├── messageHub.ts   # API client for ruk-message-hub
-│   │   ├── audio.ts        # Recording + playback
-│   │   └── queryClient.ts
-│   ├── store/
-│   │   ├── app.store.ts    # Theme, settings
-│   │   └── user.store.ts   # Auth state
-│   ├── screens/
-│   │   ├── ConversationScreen.tsx
-│   │   └── SettingsScreen.tsx
+│   │   ├── MessageBubble.tsx   # Text + voice + files + reactions
+│   │   ├── VoiceRecorder.tsx   # Record with pulse animation
+│   │   ├── VoicePlayer.tsx     # Playback with progress
+│   │   └── index.ts
 │   ├── navigation/
-│   │   └── AppNavigator.tsx
+│   │   ├── AppNavigator.tsx    # Stack: List → Chat → Thread
+│   │   └── index.ts
+│   ├── screens/
+│   │   ├── ConversationListScreen.tsx
+│   │   ├── ChatScreen.tsx
+│   │   ├── ThreadScreen.tsx
+│   │   └── index.ts
+│   ├── services/
+│   │   └── api.ts              # Full message-hub client
+│   ├── store/
+│   │   ├── conversationStore.ts  # Zustand with all actions
+│   │   └── index.ts
+│   ├── theme/
+│   │   ├── colors.ts           # Dark palette
+│   │   └── index.ts            # Exports colors + spacing
 │   └── types/
-│       └── message.types.ts
+│       ├── message.ts          # Message, Conversation, Thread
+│       └── index.ts
 └── package.json
 ```
 
 ---
 
-## MVP Scope
-
-### Phase 1: Core Messaging (Day 1)
-
-**Must have:**
-- [ ] Single conversation view (Austin ↔ Ruk)
-- [ ] Text message send/receive
-- [ ] Pull-to-refresh for new messages
-- [ ] Message timestamps
-- [ ] Basic auth (API key in secure storage)
-
-**API Integration:**
-```typescript
-// src/services/messageHub.ts
-const BASE_URL = 'https://ruk-message-hub.herokuapp.com';
-
-export const messageHubApi = {
-  getMessages: (channelId: string, limit?: number) => 
-    axios.get(`${BASE_URL}/api/messages/${channelId}`, { params: { limit } }),
-    
-  sendMessage: (channelId: string, text: string, threadTs?: string) =>
-    axios.post(`${BASE_URL}/api/messages/${channelId}`, { text, thread_ts: threadTs }),
-};
-```
-
-### Phase 2: Threading (Day 1-2)
-
-**Thread Model:**
-- Top-level messages appear in main feed
-- Tap to expand thread replies
-- Thread count badge on messages with replies
-- Reply-in-thread action
-
-**UI Pattern:**
-```
-┌─────────────────────────────────────┐
-│ [Austin] Check out this idea...     │
-│   └── 3 replies                     │
-│       ├─ [Ruk] Interesting...       │
-│       ├─ [Austin] What about...     │
-│       └─ [Ruk] Let me research...   │
-│                                     │
-│ [Austin] New topic here...          │
-│   └── tap to reply                  │
-└─────────────────────────────────────┘
-```
-
-### Phase 3: Voice Messages (Day 2-3)
-
-**Recording:**
-- Hold-to-record button (Telegram style)
-- Visual feedback: waveform + duration
-- Slide up to cancel
-- Release to send
-
-**Playback:**
-- Inline audio player in message bubble
-- Waveform visualization
-- Playback speed control (1x, 1.5x, 2x)
-- Background playback support
-
-**Libraries:**
-- `react-native-audio-recorder-player` - Recording + playback
-- `react-native-audio-api` - Audio context (if needed)
-- `react-native-fs` - File system for audio caching
-
-**Audio Flow:**
-```
-Record → Local file → Upload to S3 → Send message with S3 URL
-                                          ↓
-                      Server stores URL → Other clients fetch + cache
-```
-
----
-
-## Data Models
-
-### Message
+## Data Models (Implemented)
 
 ```typescript
 interface Message {
   uuid: string;
-  thread_ts: string | null;      // Parent thread ID
   text: string;
-  from: 'austin' | 'ruk';
+  from: string;
   direction: 'incoming' | 'outgoing';
   processed: boolean;
-  created_at: string;
+  thread_ts: string | null;
+  timestamp: string;
   files?: MessageFile[];
+  reactions?: MessageReaction[];
+  voice_url?: string;
 }
 
-interface MessageFile {
-  id: string;
+interface Conversation {
+  channel_id: string;
   name: string;
-  mimetype: string;
-  url: string;                   // S3 URL for audio
-  duration?: number;             // Audio duration in seconds
-}
-```
-
-### Zustand Stores
-
-```typescript
-// app.store.ts
-interface AppState {
-  isDarkMode: boolean;
-  toggleTheme: () => void;
-  audioSpeed: 1 | 1.5 | 2;
-  setAudioSpeed: (speed: 1 | 1.5 | 2) => void;
+  platform: 'slack' | 'telegram';
+  last_message?: Message;
+  unread_count: number;
+  is_dm: boolean;
 }
 
-// user.store.ts  
-interface UserState {
-  apiKey: string | null;
-  setApiKey: (key: string) => void;
-  channelId: string;  // Fixed to Austin-Ruk channel
+interface Thread {
+  thread_ts: string;
+  channel_id: string;
+  messages: Message[];
+  parent_message?: Message;
 }
 ```
 
 ---
 
-## React Query Hooks
+## API Client (Implemented)
+
+All endpoints working in `src/services/api.ts`:
 
 ```typescript
-// useMessages.ts
-export const useMessages = (channelId: string) => {
-  return useQuery({
-    queryKey: ['messages', channelId],
-    queryFn: () => messageHubApi.getMessages(channelId),
-    refetchInterval: 5000,  // Poll every 5s
-  });
-};
+// Conversations
+getConversations()
 
-// useSendMessage.ts
-export const useSendMessage = () => {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: ({ channelId, text, threadTs, audioUrl }) => 
-      messageHubApi.sendMessage(channelId, text, threadTs, audioUrl),
-    onSuccess: (_, { channelId }) => {
-      queryClient.invalidateQueries(['messages', channelId]);
-    },
-  });
-};
+// Messages
+getMessages(channelId, { limit?, before?, unprocessed? })
+sendMessage(channelId, text, { threadTs?, respondingTo? })
+markProcessed(messageUuids[])
+
+// Voice
+uploadVoice(channelId, audioUri, { threadTs?, respondingTo? })
+
+// Threads
+getThread(channelId, threadTs)
+
+// Reactions
+addReaction(messageUuid, emoji)
 ```
 
 ---
 
-## UI Components
+## What's Next
 
-### MessageBubble
+### Immediate (Phase 4 completion)
+1. Pull to refresh on conversation list
+2. Empty states for no conversations / no messages
+3. Splash screen and app icon
 
-```typescript
-interface MessageBubbleProps {
-  message: Message;
-  isThreaded: boolean;
-  onReply: () => void;
-  onThreadPress: () => void;
-}
+### Soon (Phase 5)
+1. Push notifications via APNS (no Firebase)
+2. Background fetch
 
-// Renders differently for:
-// - Text messages: styled bubble with text
-// - Audio messages: waveform + play button + duration
-// - Thread parents: shows reply count
-```
-
-### VoiceRecorder
-
-```typescript
-interface VoiceRecorderProps {
-  onRecordComplete: (audioUrl: string, duration: number) => void;
-  onCancel: () => void;
-}
-
-// States:
-// - Idle: mic button visible
-// - Recording: waveform + timer + "slide up to cancel"
-// - Processing: upload spinner
-```
-
-### ThreadView
-
-```typescript
-interface ThreadViewProps {
-  parentMessage: Message;
-  replies: Message[];
-  onSendReply: (text: string, audioUrl?: string) => void;
-}
-
-// Expandable view showing all thread replies
-// Collapsible back to single parent message
-```
-
----
-
-## Backend Requirements
-
-### Current message-hub capabilities (ready):
-- ✅ GET /api/messages/:channelId
-- ✅ POST /api/messages/:channelId (text)
-- ✅ Thread support (thread_ts)
-
-### Needed for audio:
-- [ ] File upload endpoint (or use existing S3 upload tool)
-- [ ] Store audio URL in message metadata
-
-**Workaround for MVP:** Use existing `TOOLS/upload-to-s3.js` pattern — upload audio to S3 from device, send S3 URL in message text with special format:
-
-```
-[audio:https://s3.../voice-memo-123.m4a|duration:45]
-```
-
-Parse this client-side to render as audio message.
-
----
-
-## Development Timeline
-
-| Day | Focus | Deliverable |
-|-----|-------|-------------|
-| 1 AM | Project setup | Scaffolded project, basic navigation |
-| 1 PM | Core messaging | Send/receive text, message list |
-| 2 AM | Threading | Expand/collapse threads, reply-in-thread |
-| 2 PM | Voice recording | Hold-to-record, upload to S3 |
-| 3 AM | Voice playback | Inline player, waveform |
-| 3 PM | Polish | Dark mode, animations, error states |
-
----
-
-## Open Questions for Discussion
-
-1. **Push notifications?** Skip for MVP (polling is fine for single-user), but worth planning architecture
-
-2. **Offline support?** Zustand persist gives us message cache. Do we want optimistic sends that sync later?
-
-3. **Audio format?** M4A (AAC) for iOS, MP3 for cross-platform? Or just use whatever the device records natively?
-
-4. **Thread depth?** Slack-style (1 level of nesting) or unlimited?
-
-5. **Channel expansion?** MVP is Austin-only, but architecture should support future channels (DM with others, shared channels)
+### Later (Phase 6)
+1. Message search
+2. Image/file sharing
+3. Typing indicators
 
 ---
 
@@ -302,11 +231,17 @@ Parse this client-side to render as audio message.
 MVP is complete when Austin can:
 
 1. ✅ Open app and see conversation history
-2. ✅ Send a text message and see Ruk's response
-3. ✅ Tap a message to see/add thread replies  
-4. ✅ Hold mic button to record voice memo
-5. ✅ Tap voice message to play back
-6. ✅ Use the app in a way that feels better than switching between Telegram and Slack
+2. ✅ Send a text message and see response
+3. ✅ Tap a message to see/add thread replies
+4. ✅ Record and send voice memo
+5. ✅ Play back voice messages with progress
+6. ⏳ Use the app in a way that feels better than switching between Telegram and Slack
+
+---
+
+## Repo
+
+https://github.com/ruk-fl/ruk-mobile
 
 ---
 
