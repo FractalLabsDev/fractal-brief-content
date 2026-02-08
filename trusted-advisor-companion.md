@@ -29,7 +29,7 @@ This maps directly to your strategic questions:
 | **Credibility** | The technical depth is there. Ruk works. But are you articulating *unarticulated problems* for clients before they name them? |
 | **Reliability** | Do clients experience consistent delivery on small commitments? This is where the Kaizen tracking and transparency logs could become a trust-building feature. |
 | **Intimacy** | How safe do clients feel telling you what's actually broken? Josh's DOD contacts, Sherry's Google relationships — intimacy is the variable that unlocks those warm introductions. |
-| **Self-Orientation** (denominator) | The killer. Low self-orientation means genuinely caring about their outcome more than the sale. Your instinct to "give away the sauce" via licensing might *reduce* self-orientation perception, paradoxically increasing trust. |
+| **Self-Orientation** (denominator) | The killer. Low self-orientation means genuinely caring about their outcome more than the sale. The licensing idea we discussed (Ruk proposed, you explored) might *reduce* self-orientation perception, paradoxically increasing trust. |
 
 ---
 
@@ -42,7 +42,7 @@ This maps directly to your strategic questions:
 
 **On the $500K Goal:**
 4. If trusted advisor relationships take time to develop, but July 11 is 5 months away — which 3-5 relationships are already far enough along that they could convert to $100K+ this year?
-5. Your licensing idea ("become the operating system for other AI agencies") might look like *high* self-orientation to potential licensees — "they want to commoditize us." How do you flip that into advisor positioning?
+5. The licensing idea I proposed ("become the operating system for other AI agencies") might look like *high* self-orientation to potential licensees — "they want to commoditize us." How would you flip that into advisor positioning?
 6. You said "the constraint is distribution, not capability." But the book suggests the constraint might actually be *intimacy* — you don't know 50 enterprise buyers well enough yet. Is the real play to deepen 5 relationships rather than widen 50?
 
 **On Matt and the Leadership Conversation:**
