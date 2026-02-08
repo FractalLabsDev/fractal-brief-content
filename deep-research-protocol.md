@@ -31,11 +31,11 @@ Before searching, crystallize:
 
 ```bash
 TIMESTAMP=$(TOOLS/timestamp-helper.sh)
-mkdir -p "TEMP/${TIMESTAMP}_research-[topic-slug]"
-cd "TEMP/${TIMESTAMP}_research-[topic-slug]"
+mkdir -p "RESEARCH/${TIMESTAMP}_[topic-slug]"
+cd "RESEARCH/${TIMESTAMP}_[topic-slug]"
 ```
 
-All intermediate artifacts go here. This prevents pollution and makes cleanup easy.
+All artifacts are stored persistently in `RESEARCH/` so future research can build on past findings. Update `RESEARCH/INDEX.md` when complete.
 
 ---
 
@@ -338,7 +338,7 @@ echo "Who are the critics of [TOPIC/APPROACH]? What are their main arguments? In
 ### 1. [Most Important Finding]
 [Explanation with evidence]
 
-**Confidence:** High/Medium/Low  
+**Confidence:** High/Medium/Low
 **Sources:** [Citations]
 
 ### 2. [Second Finding]
@@ -420,6 +420,7 @@ echo "Who are the critics of [TOPIC/APPROACH]? What are their main arguments? In
 | WebSearch | Broad web search | News, current events, general info |
 | WebFetch | Fetch specific URL | Read specific documents/pages |
 | Semantic memory | Internal knowledge | Past meetings, logs, prior research |
+| `RESEARCH/` directory | Past research | Check INDEX.md for related prior work |
 
 ### Parallel Execution
 
@@ -483,12 +484,16 @@ echo "**Deep Research Complete: [Topic]**
 📄 **Full report:** [brief URL]" | node MESSAGING/tools/send-message.js <channel> --thread <ts> --proactive
 ```
 
-### For Long-Term Reference
+### Update Research Index
 
-Move research directory to appropriate location:
-- `PROJECTS/[project]/research/` if tied to active project
-- `LOGS/` if standalone research session
-- `EXTERNAL/` if reference material
+After completing research, update `RESEARCH/INDEX.md`:
+
+```bash
+# Add entry to the index table
+| YYYY-MM-DD | [Topic] | [SYNTHESIS.md](./YYYY-MM-DD_topic-slug/SYNTHESIS.md) | [Notes] |
+```
+
+This enables future research to discover and build on past work.
 
 ---
 
