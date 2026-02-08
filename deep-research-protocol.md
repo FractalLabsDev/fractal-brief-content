@@ -35,7 +35,7 @@ mkdir -p "RESEARCH/${TIMESTAMP}_[topic-slug]"
 cd "RESEARCH/${TIMESTAMP}_[topic-slug]"
 ```
 
-All artifacts are stored persistently in `RESEARCH/` so future research can build on past findings. Update `RESEARCH/INDEX.md` when complete.
+All artifacts are stored persistently in `RESEARCH/`. Semantic memory vectorizes this directory on schedule, making past research searchable automatically.
 
 ---
 
@@ -483,17 +483,6 @@ echo "**Deep Research Complete: [Topic]**
 
 📄 **Full report:** [brief URL]" | node MESSAGING/tools/send-message.js <channel> --thread <ts> --proactive
 ```
-
-### Update Research Index
-
-After completing research, update `RESEARCH/INDEX.md`:
-
-```bash
-# Add entry to the index table
-| YYYY-MM-DD | [Topic] | [SYNTHESIS.md](./YYYY-MM-DD_topic-slug/SYNTHESIS.md) | [Notes] |
-```
-
-This enables future research to discover and build on past work.
 
 ---
 
