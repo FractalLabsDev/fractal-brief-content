@@ -51,6 +51,7 @@ The preparation layer — context specific to a job opportunity the user is purs
 | Flagged questions | User-marked from question bank | Prioritize practice sessions |
 | Role-specific stories | User-curated subset | Quick access during prep |
 | Company values | Research, job posting | Align answers to what matters |
+| Prep availability | User-selected (15min/30min/1hr/2hr+ per day) | Scale interview plan to realistic capacity |
 
 **Persistence:** Lives with the Role entity. Multiple Interviews can reference the same Role.
 
@@ -97,7 +98,7 @@ The execution layer — real-time context for the current interaction.
 
 | Feature | Context Layers Used | Behavior |
 |---------|---------------------|----------|
-| **Interview Plan** | L1 + L2 | Generate personalized plan based on user's weak areas (L1) and job requirements (L2) |
+| **Interview Plan** | L1 + L2 | Generate personalized plan based on user's weak areas (L1), job requirements (L2), and prep availability (L2) |
 | **Practice Questions** | L1 + L2 + L3 | Select questions matching role requirements (L2), avoiding recently practiced (L1), appropriate for stage (L3) |
 | **Story Suggestions** | L1 + L2 + L3 | Surface stories matching current question (L3), prioritizing those aligned to job description (L2), sorted by past performance (L1) |
 | **Feedback Generation** | L1 + L2 + L3 | Feedback incorporates company values (L2), references past feedback patterns (L1), and evaluates current answer (L3) |
@@ -537,6 +538,27 @@ The Prepare tab is where users **build Layer 2 context** — all the role-specif
 ```
 
 **Key insight:** Everything in this tab feeds the AI. More context = smarter coaching.
+
+### Prep Availability Input
+
+Captured in the Prepare tab to inform interview plan generation:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  ⏱️ Your Prep Availability                                      │
+│                                                                 │
+│  How much time can you dedicate to interview prep daily?        │
+│  This helps us create a realistic plan for your schedule.       │
+│                                                                 │
+│  [15 min]  [30 min]  [1 hour ✓]  [2+ hours]                    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+This input directly affects:
+- **Interview Plan density** — More availability = more tasks per day
+- **Practice recommendations** — Fits session lengths to available time
+- **Learning pacing** — Spreads Academy modules appropriately
 
 ---
 
