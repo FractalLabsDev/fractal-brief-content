@@ -1,8 +1,8 @@
 # Practice Interviews: Interview-Centric Redesign
 
-**Version:** 1.0  
-**Date:** February 10, 2026  
-**Author:** Matt Lim, Ruk  
+**Version:** 1.1
+**Date:** February 10, 2026
+**Author:** Matt Lim, Ruk
 **Status:** Draft Specification
 
 ---
@@ -14,6 +14,95 @@ This specification outlines a fundamental redesign of Practice Interviews from a
 **Key Paradigm Shift:**
 - **From:** "Get reps in at the gym" (abstract practice)
 - **To:** "Get ready for THIS interview" (concrete, event-driven preparation)
+
+**Architectural Foundation:**
+The platform leverages a **three-layer context engineering** approach, powered by Fractal microservices (vector databases, context management, promptsmith). AI becomes progressively smarter as users build context at each layer, enabling deeply personalized coaching.
+
+---
+
+## Context Engineering Architecture
+
+The AI coaching system uses three hierarchical layers of context, each building on the one below:
+
+### Layer 1: User Context (Persistent)
+
+The foundation layer — everything we know about the candidate across their entire journey.
+
+| Data | Source | AI Use Cases |
+|------|--------|--------------|
+| Career history | Resume, profile | Generate relevant questions; anticipate interviewer concerns |
+| Story bank | User-added, practice history | Surface best stories for each question |
+| Practice history | All sessions | Identify patterns, track improvement |
+| Feedback patterns | AI analysis | Focus coaching on weak areas |
+| Learning progress | Academy activity | Recommend next learning modules |
+| Outcome history | Debrief data | Learn what works for this user |
+
+**Persistence:** Stored permanently, grows over time, survives interview completion.
+
+### Layer 2: Role Context (Per Target Role)
+
+The preparation layer — context specific to a job opportunity the user is pursuing.
+
+| Data | Source | AI Use Cases |
+|------|--------|--------------|
+| Job description | User-uploaded | Match stories to requirements; generate relevant questions |
+| Company research | User notes + AI research | Tailor answers to company culture |
+| Interviewer notes | User-added LinkedIn insights | Adjust communication style |
+| Flagged questions | User-marked from question bank | Prioritize practice sessions |
+| Role-specific stories | User-curated subset | Quick access during prep |
+| Company values | Research, job posting | Align answers to what matters |
+
+**Persistence:** Lives with the Role entity. Multiple Interviews can reference the same Role.
+
+### Layer 3: Session Context (Per Interview/Practice)
+
+The execution layer — real-time context for the current interaction.
+
+| Data | Source | AI Use Cases |
+|------|--------|--------------|
+| Interview stage | User-selected | Stage-appropriate question selection |
+| Session type | Behavioral, technical, case | Correct feedback framework |
+| Current question | Active practice | Real-time coaching |
+| Transcript | Live or recorded | Immediate feedback |
+| Previous answers (session) | Same session | Track consistency, avoid repetition |
+| Time remaining | Session clock | Pace guidance |
+
+**Persistence:** Session-scoped. Summarized into Layer 1 after completion.
+
+### Context Flow Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    AI COACHING ENGINE                          │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ LAYER 3: Session Context (real-time)                    │   │
+│  │ Current question, transcript, stage type                │   │
+│  └───────────────────────┬─────────────────────────────────┘   │
+│                          │                                      │
+│  ┌───────────────────────▼─────────────────────────────────┐   │
+│  │ LAYER 2: Role Context (per target role)                 │   │
+│  │ Job description, company research, flagged questions    │   │
+│  └───────────────────────┬─────────────────────────────────┘   │
+│                          │                                      │
+│  ┌───────────────────────▼─────────────────────────────────┐   │
+│  │ LAYER 1: User Context (persistent)                      │   │
+│  │ Career history, story bank, feedback patterns           │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### How AI Uses Context (Examples)
+
+| Feature | Context Layers Used | Behavior |
+|---------|---------------------|----------|
+| **Interview Plan** | L1 + L2 | Generate personalized plan based on user's weak areas (L1) and job requirements (L2) |
+| **Practice Questions** | L1 + L2 + L3 | Select questions matching role requirements (L2), avoiding recently practiced (L1), appropriate for stage (L3) |
+| **Story Suggestions** | L1 + L2 + L3 | Surface stories matching current question (L3), prioritizing those aligned to job description (L2), sorted by past performance (L1) |
+| **Feedback Generation** | L1 + L2 + L3 | Feedback incorporates company values (L2), references past feedback patterns (L1), and evaluates current answer (L3) |
+| **Ideal Answer** | L1 + L2 + L3 | Generate example answer using user's actual stories (L1), tailored to company (L2), formatted for question type (L3) |
+| **Prepare Checklist** | L2 | Generate role-specific preparation based on job requirements |
 
 ---
 
@@ -35,16 +124,59 @@ This specification outlines a fundamental redesign of Practice Interviews from a
 
 ## Core Data Model
 
+### Role Entity (Layer 2 Context Container)
+
+The Role is the **persistent context container** for a target job opportunity. Multiple Interviews can reference the same Role (e.g., multiple rounds at the same company).
+
+```typescript
+interface Role {
+  id: string;
+  userId: string;
+
+  // Basic info
+  company: string;
+  title: string;
+  location?: string;
+  salaryRange?: string;
+
+  // Context (Layer 2 data)
+  jobDescription?: string;       // Full JD text
+  companyResearch?: string;      // User notes about company
+  companyValues?: string[];      // Extracted or user-added
+  interviewerNotes?: InterviewerNote[];
+  flaggedQuestionIds?: string[]; // Questions user wants to practice
+  curatedStoryIds?: string[];    // Stories user marked relevant
+
+  // Metadata
+  status: 'active' | 'archived' | 'got_offer' | 'rejected';
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface InterviewerNote {
+  name: string;
+  linkedInUrl?: string;
+  notes?: string;
+  role?: string;  // Their role at the company
+}
+```
+
 ### Interview Entity
+
+Interviews are **scheduled events** within a Role. They inherit Role context.
 
 ```typescript
 interface Interview {
   id: string;
-  company: string;
-  role: string;
+  roleId: string;  // References Role for Layer 2 context
+  userId: string;
+
+  // Event details
   date: Date;
-  location?: string;  // Address, "Remote", etc.
+  location?: string;  // Address, "Remote", video link
   stages: InterviewStage[];
+
+  // State
   status: 'upcoming' | 'completed' | 'archived';
   interviewPlan: InterviewPlan;
   outcome?: 'got_job' | 'rejected' | 'ghosted' | 'pending';
@@ -78,6 +210,39 @@ interface InterviewDebrief {
   whatWentWell: string;
   whatToImprove: string;
   followUpDate?: Date;
+}
+```
+
+### User Context Entity (Layer 1)
+
+User-level persistent context for AI coaching.
+
+```typescript
+interface UserContext {
+  userId: string;
+
+  // Career history
+  resumeText?: string;
+  careerSummary?: string;
+
+  // AI-generated insights
+  feedbackPatterns?: FeedbackPattern[];
+  strengthAreas?: string[];
+  improvementAreas?: string[];
+
+  // Aggregated from sessions
+  totalPracticeSessions: number;
+  totalQuestionsAnswered: number;
+  averageScore: number;
+
+  updatedAt: Date;
+}
+
+interface FeedbackPattern {
+  area: string;  // e.g., "STAR structure", "Conciseness"
+  trend: 'improving' | 'stable' | 'declining';
+  frequency: number;  // How often this appears in feedback
+  lastMentioned: Date;
 }
 ```
 
@@ -202,7 +367,7 @@ When user has no interviews:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**Primary CTA:** Schedule an interview (real or target)  
+**Primary CTA:** Schedule an interview (real or target)
 **Secondary CTA:** Practice options for users who just want to browse
 
 ---
@@ -303,35 +468,75 @@ When user clicks into a specific interview:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Prepare Tab
+### Prepare Tab (Context-Building Workspace)
+
+The Prepare tab is where users **build Layer 2 context** — all the role-specific information that makes AI coaching smarter.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  Prepare for Google PM Interview                                │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  Logistics                                                      │
+│  📄 Job Description                              [Edit] [+ Add] │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ Product Manager, Search                                 │   │
+│  │ Minimum qualifications: 5+ years PM experience...       │   │
+│  │ Preferred: Experience with ML/AI products...            │   │
+│  │                                                         │   │
+│  │ 🤖 AI extracted: Leadership, Cross-functional,          │   │
+│  │    Data-driven, Technical fluency                       │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  🏢 Company Research                             [Edit] [+ Add] │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ Your notes:                                             │   │
+│  │ "Focus on user impact. Recent AI announcements.         │   │
+│  │  CEO mentioned 'AI-first' in earnings call."            │   │
+│  │                                                         │   │
+│  │ 🤖 AI research: Google values innovation, data-driven   │   │
+│  │    decisions, and 10x thinking...                       │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  👥 Interviewers                                       [+ Add] │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ Sarah Chen · Senior PM, Search                          │   │
+│  │ "Background in ML. Focus on technical depth"            │   │
+│  │ [LinkedIn ↗]                                            │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ Mike Johnson · Engineering Manager                      │   │
+│  │ "10 years at Google. Likely system design focused"      │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  📚 Story Bank                                   [8 stories ↗] │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ Curated for this role:                                  │   │
+│  │ ☐ Led cross-functional launch (Leadership, Data)        │   │
+│  │ ☐ Resolved eng/design conflict (Cross-functional)       │   │
+│  │ [+ Curate more stories for Google PM]                   │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  ❓ Flagged Questions                                  [+ Add] │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │ Questions you want to practice for this role:           │   │
+│  │ ☐ "Tell me about a time you used data to make a         │   │
+│  │    product decision" (Behavioral)                       │   │
+│  │ ☐ "How would you improve Google Search?" (Product)      │   │
+│  │ [Browse Question Bank ↗]                                │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  ─────────────────────────────────────────────────────────────  │
+│                                                                 │
+│  📋 Day-Of Checklist                                            │
 │  ☐ Confirm interview location                                   │
-│  ☐ Plan your route (allow extra time)                          │
-│  ☐ Know where to park / how to get there                       │
-│                                                                 │
-│  Day Before                                                     │
-│  ☐ Prepare your outfit                                         │
-│  ☐ Print copies of your resume                                 │
-│  ☐ Prepare questions to ask the interviewer                    │
-│  ☐ Get a good night's sleep                                    │
-│                                                                 │
-│  Day Of                                                         │
-│  ☐ Review your stories one more time                           │
-│  ☐ Arrive 10-15 minutes early                                  │
-│  ☐ Bring water and a snack                                     │
-│  ☐ Put phone on silent                                         │
-│                                                                 │
-│  Interviewer Research                                           │
-│  [+ Add interviewer LinkedIn]                                   │
+│  ☐ Prepare your outfit                                          │
+│  ☐ Review your top 3 stories                                    │
+│  ☐ Prepare questions to ask                                     │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+**Key insight:** Everything in this tab feeds the AI. More context = smarter coaching.
 
 ---
 
@@ -526,31 +731,178 @@ Plan is editable — user can adjust tasks, mark complete, or regenerate.
 
 ---
 
+## Fractal Microservices Integration
+
+The context engineering architecture is powered by Fractal Labs microservices:
+
+### Vector Databases (Semantic Search)
+
+Used for similarity-based retrieval across context layers.
+
+| Use Case | Data Indexed | Query Example |
+|----------|--------------|---------------|
+| **Story Surfacing** | Story bank entries | "Find stories matching 'led cross-functional team through ambiguity'" |
+| **Question Matching** | Question bank | "Questions similar to 'Tell me about a time you failed'" |
+| **Feedback Retrieval** | Past feedback | "Previous feedback about STAR structure for this user" |
+| **Company Research** | Scraped company data | "What do we know about Google's interview process?" |
+
+**Implementation:**
+- Stories and questions embedded at creation time
+- Feedback patterns extracted and embedded after each session
+- Company research indexed from external sources (Glassdoor, LinkedIn, press)
+- All queries include user_id filter for multi-tenant isolation
+
+### Context Management Service
+
+Orchestrates the three context layers and manages context windows for AI calls.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                   CONTEXT MANAGEMENT SERVICE                    │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  buildSessionContext(userId, roleId, sessionId) → ContextBundle │
+│                                                                 │
+│  1. Fetch Layer 1: UserContext                                  │
+│     - Career summary, feedback patterns, strength areas         │
+│     - Recent practice history (last 10 sessions)                │
+│                                                                 │
+│  2. Fetch Layer 2: RoleContext                                  │
+│     - Job description, company research, interviewer notes      │
+│     - Flagged questions, curated stories                        │
+│                                                                 │
+│  3. Fetch Layer 3: SessionContext                               │
+│     - Current stage, question type, transcript so far           │
+│                                                                 │
+│  4. Vector retrieval (conditional)                              │
+│     - If asking for story: retrieve similar stories             │
+│     - If generating feedback: retrieve past feedback patterns   │
+│                                                                 │
+│  5. Token budget management                                     │
+│     - Prioritize by relevance score                             │
+│     - Truncate lower-priority context if exceeding budget       │
+│                                                                 │
+│  Returns: Structured context bundle ready for promptsmith       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Key responsibilities:**
+- Context aggregation across layers
+- Token budget optimization (fit within model limits)
+- Caching frequently-accessed context
+- Context freshness management (invalidate on updates)
+
+### Promptsmith (Prompt Engineering)
+
+Transforms context bundles into optimized prompts for specific AI tasks.
+
+| Task | Prompt Template | Context Used |
+|------|-----------------|--------------|
+| **Generate Interview Plan** | `interview_plan_v2` | L1 (weak areas, history) + L2 (job requirements, days until) |
+| **Evaluate Answer** | `answer_feedback_v3` | L1 (feedback patterns) + L2 (company values) + L3 (question, transcript) |
+| **Generate Ideal Answer** | `ideal_answer_v1` | L1 (user stories) + L2 (company context) + L3 (question type) |
+| **Surface Stories** | `story_suggestion_v1` | L1 (story bank) + L2 (role requirements) + L3 (current question) |
+| **Company Research** | `company_research_v1` | L2 (company name) + external data |
+
+**Prompt versioning:** All prompts versioned and A/B testable. Promptsmith tracks which version produced which outputs for quality iteration.
+
+**Dynamic prompt assembly:**
+```typescript
+// Example: Building feedback prompt
+const feedbackPrompt = promptsmith.build('answer_feedback_v3', {
+  // Layer 1
+  user_strengths: context.userContext.strengthAreas,
+  past_feedback_patterns: context.userContext.feedbackPatterns,
+
+  // Layer 2
+  company_values: context.roleContext.companyValues,
+  job_requirements: context.roleContext.extractedRequirements,
+
+  // Layer 3
+  question: context.sessionContext.currentQuestion,
+  answer_transcript: context.sessionContext.transcript,
+  question_type: context.sessionContext.questionType,
+});
+```
+
+### Service Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     PRACTICE INTERVIEWS                          │
+│                        (Frontend)                                │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    PI Backend API                                │
+│  (Roles, Interviews, Sessions, Stories, Questions)               │
+└─────────┬───────────────────────────────────┬───────────────────┘
+          │                                   │
+          ▼                                   ▼
+┌─────────────────────┐             ┌─────────────────────┐
+│   Context Manager   │◄───────────►│    Vector DB        │
+│   (Fractal OS)      │             │   (Fractal OS)      │
+└─────────┬───────────┘             └─────────────────────┘
+          │
+          ▼
+┌─────────────────────┐
+│    Promptsmith      │
+│   (Fractal OS)      │
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│   Claude/LLM API    │
+└─────────────────────┘
+```
+
+---
+
 ## Technical Considerations
 
 ### New Entities
-- `interviews` table
+- `roles` table (Layer 2 context container)
+- `interviews` table (references role)
 - `interview_stages` table
 - `interview_plans` table
 - `interview_debriefs` table
 - `questions` table (user-submitted)
 - `stories` table
+- `user_context` table (Layer 1 aggregations)
+- `interviewer_notes` table
 
 ### API Endpoints
-- `POST /interviews` — Create interview
+
+**Roles:**
+- `POST /roles` — Create role
+- `GET /roles` — List user's roles
+- `GET /roles/:id` — Role detail with context
+- `PATCH /roles/:id` — Update role context
+- `POST /roles/:id/research` — Trigger AI company research
+
+**Interviews:**
+- `POST /interviews` — Create interview (references role)
 - `GET /interviews` — List user's interviews
 - `GET /interviews/:id` — Interview detail
 - `PATCH /interviews/:id` — Update interview
 - `POST /interviews/:id/debrief` — Submit debrief
 - `GET /interviews/:id/plan` — Get/generate plan
 
+**Context:**
+- `GET /context/session/:sessionId` — Get assembled context bundle
+- `POST /context/feedback` — Submit feedback for pattern extraction
+
 ### Frontend Routes
 - `/` — Home dashboard
+- `/roles` — Role list (optional, may merge with interviews)
+- `/roles/:id` — Role detail (context workspace)
 - `/interviews` — Interview list
 - `/interviews/:id` — Interview detail
 - `/interviews/:id/practice` — Practice tab
 - `/interviews/:id/learn` — Learn tab
-- `/interviews/:id/prepare` — Prepare tab
+- `/interviews/:id/prepare` — Prepare tab (context building)
 - `/practice` — Standalone practice (question bank, story bank)
 - `/academy` — Learning modules
 
