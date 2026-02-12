@@ -1,7 +1,7 @@
 # Elanah Team Weekly Digest
 ## February 11, 2026
 
-![audio:Listen to this digest](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/12/3a73ec04-7f4a-42c5-ae39-08fa9bdfe265-elanah-digest-2026-02-11.mp3)
+![audio:Listen to this digest](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/12/21195b9a-cc7b-424e-bbee-afbaa7e5c8f2-elanah-digest-2026-02-11-v2.mp3)
 
 ---
 
