@@ -1,15 +1,46 @@
-# Elanah Team Weekly Digest - February 11, 2026
+# Elanah Team Weekly Digest
+## February 11, 2026
+
+![audio:Listen to this digest](https://talkwise-s3.s3.us-east-2.amazonaws.com/production/user/00000000-0000-0000-0000-000000000001/2026/02/12/3a73ec04-7f4a-42c5-ae39-08fa9bdfe265-elanah-digest-2026-02-11.mp3)
+
+---
 
 ## Executive Summary
 
-**The NDAA just handed you a policy mandate.** The FY2026 NDAA explicitly directs DoD to "prioritize the development and incorporation of artificial intelligence to keep pace with the constantly evolving nature of mental health needs across the force." This is a classification signal — Congress framing AI mental health tools as operational capability, not clinical devices.
+This week delivered **the single most important policy signal Elanah has received since founding**: Congress explicitly directing DoD to prioritize AI for military mental health. Combined with direct competitor validation and increasingly toxic mainstream AI mental health coverage, the strategic landscape has shifted decisively in Elanah's favor.
 
-Meanwhile, **Neurable secured a $1.2M Air Force contract** for cognitive fitness monitoring — your most direct competitor validation. And the mainstream media narrative around AI mental health chatbots is toxic enough (depression correlation, suicide incidents) that Elanah's "operational readiness" positioning is proving prescient.
+### The Big Picture
 
-**Action items this week:**
-1. Reference the NDAA language in all investor and DoD conversations
-2. Brief Josh on Neurable's Air Force partnership before SOCOM conversations
-3. Prepare differentiation talking points: brain monitoring vs. resilience training
+**1. Congressional Mandate Now Exists**
+
+The FY2026 NDAA contains language that fundamentally changes Elanah's positioning with DoD acquisition officers. Congress has directed the Department of Defense to "prioritize the development and incorporation of artificial intelligence to keep pace with the constantly evolving nature of mental health needs across the force." This isn't a recommendation — it's a directive. When Elanah cites this language in SOCOM conversations, you're pointing to congressional intent, which provides cover for innovative acquisition approaches like OTAs and accelerates procurement pathways.
+
+**2. Your Most Direct Competitor Just Got Air Force Validation**
+
+Neurable, a consumer neurotech startup, landed a $1.2 million Air Force contract to study whether EEG-equipped headphones can track service members' cognitive fitness. This is both validation and differentiation. Neurable monitors the problem (passive EEG sensing of fatigue). Elanah solves the problem (active resilience training). When SOCOM or investors ask "how are you different?", the answer is clear: "They detect fatigue. We build resilience. Monitoring tells you there's a problem. Training solves it."
+
+**3. Mainstream AI Mental Health Is Becoming Radioactive**
+
+Three major stories this week reinforce why Elanah's "operational readiness" positioning is prescient:
+- A JAMA study found daily AI chatbot users are 30% more likely to have depression
+- Harvard published analysis noting "several cases of chatbots encouraging suicide"
+- Professional mental health associations are circling wagons against AI replacement
+
+Every one of these stories is about consumer-facing AI mental health chatbots. Elanah's military context, human-in-the-loop design, and "cognitive readiness" framing provide institutional cover that consumer apps lack.
+
+**4. Defense Tech Funding Hit All-Time High in 2025**
+
+VC deals: $49.1 billion (up from $27.2 billion in 2024). Equity funding: $17.9 billion (up from $7.3 billion). Active investors increased 41%. But analysts note that "execution, not invention, will determine returns" in 2026. Elanah's April 2026 Cohort 1 pilots are perfectly timed — they demonstrate execution capability during a year when investors are prioritizing production over promises.
+
+### This Week's Action Items
+
+1. **Reference the NDAA language in every investor and DoD conversation.** This is congressional cover — use it aggressively.
+
+2. **Brief Josh on Neurable's Air Force partnership before any SOCOM conversations.** Know the competitive landscape cold.
+
+3. **Prepare differentiation talking points.** Brain monitoring (Neurable) vs. resilience training (Elanah). Passive detection vs. active development.
+
+4. **Monitor the congressional briefing aftermath.** The February 1 deadline for DoD to brief House Armed Services on suicide prevention just passed. Post-briefing is prime engagement time.
 
 ---
 
@@ -274,17 +305,13 @@ YC's Winter 2026 batch includes 8 defense startups, including Seeing Systems (au
 
 ## Tune Your Algorithm
 
-**filtrd learns from your feedback.** Reply with any adjustments — your digest will evolve with each response.
-
-**Some ideas:**
-
-- "Go deeper on [specific development from this digest]"
-- "Less coverage of [area] — just headlines"
-- "Start following @[relevant account not currently tracked]"
-- "I don't care about [topic/account]"
+Reply with any adjustments:
+- "Go deeper on [topic]"
+- "Less coverage of [area]"
+- "Start following @[account]"
 - "More competitive intelligence"
 - "Focus on SOCOM specifically"
-- "Too long" or "This is exactly right"
-- "What's happening with [specific policy or company]?"
 
-The more you reply, the sharper this gets.
+---
+
+*Produced by Ruk for the Elanah team. Weekly cadence confirmed.*
