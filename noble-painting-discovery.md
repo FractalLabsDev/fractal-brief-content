@@ -13,7 +13,7 @@ Kenny runs **Noble Painting**, a multi-trade contracting company (painting, dryw
 
 His endgame is **acquisition within 2-3 years**. He's not optimizing for profit in year one -- he wants rapid customer acquisition and scale.
 
-Austin met Kenny through a mutual connection at a coworking space. Kenny's sales manager (Lena) handles ~80% of sales; he has a project manager (JB), four paint crews of 3-4 people each, plus drywall, stucco, framing, and carpentry subs. He recently invested $11K in a diamond head grinding machine for epoxy floor prep, which gives you a sense of his growth trajectory and willingness to invest in tools.
+Austin met Kenny through Lou Lou -- his significant other who will be running marketing for the app -- at Empire coworking. Kenny's sales manager (Lena) handles ~80% of sales; he has a project manager (JB), four paint crews of 3-4 people each, plus drywall, stucco, framing, and carpentry subs. He recently invested $11K in a diamond head grinding machine for epoxy floor prep, which gives you a sense of his growth trajectory and willingness to invest in tools.
 
 ---
 
