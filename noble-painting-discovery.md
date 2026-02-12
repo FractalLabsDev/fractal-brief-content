@@ -3,21 +3,21 @@
 **Prepared for**: Matt (Product Manager)
 **Date**: February 12, 2026
 **Context**: Pre-discovery session prep for a new client engagement
-**Client**: Sean (Noble Painting, Scottsdale AZ area)
+**Client**: Kenny (Noble Painting, Scottsdale AZ area)
 
 ---
 
 ## Executive Summary
 
-Sean runs **Noble Painting**, a multi-trade contracting company (painting, drywall, stucco, epoxy, framing, carpentry, cabinetry). He's in the process of **franchising the painting side** and wants to build a SaaS product that combines **LiDAR-powered room scanning** with a **painting-specific CRM** to serve the broader painting contractor market.
+Kenny runs **Noble Painting**, a multi-trade contracting company (painting, drywall, stucco, epoxy, framing, carpentry, cabinetry). He's in the process of **franchising the painting side** and wants to build a SaaS product that combines **LiDAR-powered room scanning** with a **painting-specific CRM** to serve the broader painting contractor market.
 
 His endgame is **acquisition within 2-3 years**. He's not optimizing for profit in year one -- he wants rapid customer acquisition and scale.
 
-Austin met Sean through a mutual connection at a coworking space. Sean's sales manager (Lena) handles ~80% of sales; he has a project manager (JB), four paint crews of 3-4 people each, plus drywall, stucco, framing, and carpentry subs. He recently invested $11K in a diamond head grinding machine for epoxy floor prep, which gives you a sense of his growth trajectory and willingness to invest in tools.
+Austin met Kenny through a mutual connection at a coworking space. Kenny's sales manager (Lena) handles ~80% of sales; he has a project manager (JB), four paint crews of 3-4 people each, plus drywall, stucco, framing, and carpentry subs. He recently invested $11K in a diamond head grinding machine for epoxy floor prep, which gives you a sense of his growth trajectory and willingness to invest in tools.
 
 ---
 
-## What Sean Wants to Build
+## What Kenny Wants to Build
 
 ### Core Product Vision
 
@@ -30,9 +30,9 @@ An **iOS app** that lets painting contractors:
 
 ### The Key Differentiator
 
-**No existing product combines LiDAR scanning with painting-specific estimation and CRM.** Sean's current CRM (DripJobs) requires manual entry for every measurement. There is no app on the market that can scan a room and pipe those dimensions directly into an estimate/proposal workflow for painters.
+**No existing product combines LiDAR scanning with painting-specific estimation and CRM.** Kenny's current CRM (DripJobs) requires manual entry for every measurement. There is no app on the market that can scan a room and pipe those dimensions directly into an estimate/proposal workflow for painters.
 
-### Long-Term Roadmap (Sean's Full Vision)
+### Long-Term Roadmap (Kenny's Full Vision)
 
 These came up in conversation but are explicitly **not MVP**:
 
@@ -50,7 +50,7 @@ These came up in conversation but are explicitly **not MVP**:
 ### SaaS Subscription
 - **Target**: $300/month base + per-user fees for additional field managers
 - **Year 1 promo**: ~$150/month to undercut DripJobs and drive adoption
-- **Sean's rationale**: Must be cheaper than DripJobs ($97-150/mo) initially to win market share, then grow into premium pricing as features expand
+- **Kenny's rationale**: Must be cheaper than DripJobs ($97-150/mo) initially to win market share, then grow into premium pricing as features expand
 
 ### Revenue Philosophy
 - Not seeking profitability in years 1-3
@@ -113,13 +113,13 @@ This is a genuine whitespace. The closest competitors require painters to either
 - **PRO+ Program**: Free contractor program with exclusive pricing, job quote generators, paint calculators, color visualization tools, Project Bids tool, business training series
 - **Integration potential**: EDI integrations available via ConnectPointz/SPS Commerce. No public API, but partnership-level integrations are possible
 - **Partnership angle**: Exclusive paint recommendations for SW products within the app. Promo code system where SW-referred contractors only see SW products. SW gets guaranteed product placement; we get distribution through their 4,800 stores and contractor network
-- **Known issue (from Sean)**: Chronic inventory shortages at individual stores. Contractors end up driving between multiple locations. A real-time inventory check via the app could be a major value-add
+- **Known issue (from Kenny)**: Chronic inventory shortages at individual stores. Contractors end up driving between multiple locations. A real-time inventory check via the app could be a major value-add
 
 ### Dunn-Edwards
 
 - **Scale**: ~150 stores across AZ, CA, NV, NM and a few other western states. Strong in the Southwest
 - **Contractor programs**: Discount program with charge accounts, job accounts, installment accounts for equipment. 2% prompt pay discount
-- **Partnership angle**: Same promo code / exclusive recommendation model as SW. Sean has a personal contact (Tom Wheeler, DE sales rep with 20+ years industry experience) who could potentially connect to national decision-makers
+- **Partnership angle**: Same promo code / exclusive recommendation model as SW. Kenny has a personal contact (Tom Wheeler, DE sales rep with 20+ years industry experience) who could potentially connect to national decision-makers
 - **Advantage**: Smaller and more likely to move quickly on a partnership than SW. Regional focus aligns well with initial market launch in Arizona
 
 ### Home Depot / Behr
@@ -130,7 +130,7 @@ This is a genuine whitespace. The closest competitors require painters to either
 - **Partnership angle**: QR codes in stores linking to app sign-up with HD promo codes. Behr product recommendations within the app. Potential lead-gen integration with Pro Referral
 - **Note**: Home Depot's contractor base skews more toward smaller operations and DIY-adjacent pros
 
-### Partnership Revenue Model (Sean's Vision)
+### Partnership Revenue Model (Kenny's Vision)
 
 **Phase 1** (Launch): Partners get exclusive product recommendations within the app for contractors who sign up with their promo code. No revenue share needed -- the value to the manufacturer is guaranteed product placement.
 
@@ -252,7 +252,7 @@ This is a strong opportunity. The client:
 - Is building in a genuine whitespace (LiDAR + painting CRM = nobody does this)
 
 **Risk factors:**
-- Scope creep potential is high (Sean has a big vision). Matt's role in ruthlessly limiting MVP scope will be critical
+- Scope creep potential is high (Kenny has a big vision). Matt's role in ruthlessly limiting MVP scope will be critical
 - Paint manufacturer partnerships are speculative until validated
 - LiDAR scanning is iOS-only, limiting initial addressable market
 - 2-3 year acquisition timeline is aggressive for building + scaling a vertical SaaS
